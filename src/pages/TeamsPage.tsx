@@ -14,6 +14,8 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import graphql from 'babel-plugin-relay/macro';
 import {QueryRenderer} from "react-relay";
 import environment from "../lib/relayEnv";
+import {TeamsPageQuery} from "./__generated__/TeamsPageQuery.graphql";
+
 
 export default function PlayPage() {
     return (
@@ -22,7 +24,7 @@ export default function PlayPage() {
             <Card className="mb-3">
                 <Card.Body>
                     <Card.Title>Meine Teams</Card.Title>
-                    <QueryRenderer
+                    <QueryRenderer<TeamsPageQuery>
                         environment={environment}
                         query={graphql`
                             query TeamsPageQuery {
@@ -30,6 +32,17 @@ export default function PlayPage() {
                                     edges {
                                         node {
                                             id
+                                            name
+                                            mode
+                                            state
+                                            createdAt
+                                            creator {
+                                                username
+                                            }
+                                            topic {
+                                                name
+                                                code
+                                            }
                                         }
                                     }
                                 }
@@ -58,18 +71,14 @@ export default function PlayPage() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Jörgs Team</td>
-                                    <td>IREN Requirments Engineering</td>
-                                    <td>Jörg Sawatzki</td>
-                                    <td>
-                                        Training
-                                    </td>
-                                    <td>
-                                        12.3.2020 17:32
-                                    </td>
-
-                                </tr>
+                            
+                                { props && props.teams.edges.map((edge) => (
+                                    <tr>
+                                        <td>{edge.node.name}</td>
+                                        <td>{edge.node.topic.code} {edge.node.topic.name}</td>
+                                        <td>{edge.node.mode}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </Table>
                     )}/>

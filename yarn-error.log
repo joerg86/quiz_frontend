@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /usr/share/yarn/bin/yarn.js add @types/babel-plugin-relay
+  /usr/bin/node /usr/share/yarn/bin/yarn.js add Watchman
 
 PATH: 
   /home/joerg/bin:/home/joerg/.local/bin:/home/joerg/anaconda3/bin:/home/joerg/anaconda3/condabin:/home/joerg/bin:/home/joerg/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/joerg/Android/Sdk/emulator:/home/joerg/Android/Sdk/tools:/home/joerg/Android/Sdk/tools/bin:/home/joerg/Android/Sdk/platform-tools:/home/joerg/flutter/bin:/home/joerg/Android/Sdk/emulator:/home/joerg/Android/Sdk/tools:/home/joerg/Android/Sdk/tools/bin:/home/joerg/Android/Sdk/platform-tools:/home/joerg/flutter/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fbabel-plugin-relay: Not found
+  Error: https://registry.yarnpkg.com/Watchman: Not found
       at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66947:18)
       at Request.self.callback (/usr/share/yarn/lib/cli.js:140665:22)
       at Request.emit (events.js:223:5)
@@ -56,13 +56,15 @@ npm manifest:
       "react-router-dom": "^5.1.2",
       "react-scripts": "3.4.1",
       "relay-runtime": "^9.1.0",
-      "typescript": "~3.7.2"
+      "typescript": "~3.7.2",
+      "watchman": "^1.0.0"
     },
     "scripts": {
       "start": "react-scripts start",
       "build": "react-scripts build",
       "test": "react-scripts test",
-      "eject": "react-scripts eject"
+      "eject": "react-scripts eject",
+      "relay": "relay-compiler"
     },
     "eslintConfig": {
       "extends": "react-app"
@@ -83,6 +85,7 @@ npm manifest:
       "babel-plugin-relay": "^9.1.0",
       "graphql": "^15.0.0",
       "relay-compiler": "^9.1.0",
+      "relay-compiler-language-typescript": "^12.0.2",
       "relay-config": "^9.1.0"
     }
   }
@@ -5674,6 +5677,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/immer/-/immer-1.10.0.tgz#bad67605ba9c810275d91e1c2a47d4582e98286d"
     integrity sha512-O3sR1/opvCDGLEVcvrGTMtLac8GJ5IwZC4puPrLuRj3l7ICKvkmA0vGuU9OW8mV9WIBRnaxp5GJh9IEAaNOoYg==
   
+  immutable@^4.0.0-rc.12:
+    version "4.0.0-rc.12"
+    resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0-rc.12.tgz#ca59a7e4c19ae8d9bf74a97bdf0f6e2f2a5d0217"
+    integrity sha512-0M2XxkZLx/mi3t8NVwIm1g8nHoEmM9p9UBl/G9k4+hm0kBgOVdMV/B3CY5dQ8qG8qc80NN4gDV4HQv6FTJ5q7A==
+  
   immutable@~3.7.6:
     version "3.7.6"
     resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.7.6.tgz#13b4d3cb12befa15482a26fe1b2ebae640071e4b"
@@ -9699,6 +9707,14 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"
     integrity sha1-VNvzd+UUQKypCkzSdGANP/LYiKk=
   
+  relay-compiler-language-typescript@^12.0.2:
+    version "12.0.2"
+    resolved "https://registry.yarnpkg.com/relay-compiler-language-typescript/-/relay-compiler-language-typescript-12.0.2.tgz#9e8d3717b624d9fba9846a84369ca22f7bdbbf6c"
+    integrity sha512-sI9fDukIiykUD7QsLTFpzs32wh0dyjK/pWgh5zM5l8tfUxHepnn0K3SEzqUe7vB1u3v71hBV/zXDPNFVs/jhqQ==
+    dependencies:
+      immutable "^4.0.0-rc.12"
+      invariant "^2.2.4"
+  
   relay-compiler@^9.1.0:
     version "9.1.0"
     resolved "https://registry.yarnpkg.com/relay-compiler/-/relay-compiler-9.1.0.tgz#e2975de85192e2470daad78e30052bf9614d22ed"
@@ -11390,6 +11406,11 @@ Lockfile:
     integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
     dependencies:
       loose-envify "^1.0.0"
+  
+  watchman@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/watchman/-/watchman-1.0.0.tgz#a800f815957952ed9229c54610fb4a26897d2c21"
+    integrity sha512-f7sP6DSVQzNUAXIBctvYyJyq6/j/FtWoEn6yh/Ot/E14a3am7JMH0tygWt6iE+T+DT+BNOUAT3hM/gZ7W9Ycmw==
   
   watchpack@^1.6.0:
     version "1.6.0"
