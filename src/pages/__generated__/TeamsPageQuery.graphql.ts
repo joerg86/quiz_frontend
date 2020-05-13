@@ -3,7 +3,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type TeamMode = "COMPETITION" | "TRAIN" | "%future added value";
-export type TeamState = "ARCHIVED" | "OPEN" | "PLAYING" | "%future added value";
+export type TeamState = "ANSWER" | "ARCHIVED" | "DONE" | "OPEN" | "QUESTION" | "SCORING" | "%future added value";
 export type TeamsPageQueryVariables = {};
 export type TeamsPageQueryResponse = {
     readonly teams: {
@@ -14,6 +14,9 @@ export type TeamsPageQueryResponse = {
                 readonly mode: TeamMode;
                 readonly state: TeamState;
                 readonly createdAt: unknown;
+                readonly creator: {
+                    readonly username: string;
+                };
                 readonly topic: {
                     readonly name: string;
                     readonly code: string;
@@ -39,6 +42,10 @@ query TeamsPageQuery {
         mode
         state
         createdAt
+        creator {
+          username
+          id
+        }
         topic {
           name
           code
@@ -90,6 +97,13 @@ v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "username",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "code",
   "storageKey": null
 };
@@ -132,13 +146,25 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "concreteType": "UserNode",
+                    "kind": "LinkedField",
+                    "name": "creator",
+                    "plural": false,
+                    "selections": [
+                      (v5/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "concreteType": "TopicNode",
                     "kind": "LinkedField",
                     "name": "topic",
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
-                      (v5/*: any*/)
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -192,13 +218,26 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "concreteType": "UserNode",
+                    "kind": "LinkedField",
+                    "name": "creator",
+                    "plural": false,
+                    "selections": [
+                      (v5/*: any*/),
+                      (v0/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "concreteType": "TopicNode",
                     "kind": "LinkedField",
                     "name": "topic",
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
-                      (v5/*: any*/),
+                      (v6/*: any*/),
                       (v0/*: any*/)
                     ],
                     "storageKey": null
@@ -219,9 +258,9 @@ return {
     "metadata": {},
     "name": "TeamsPageQuery",
     "operationKind": "query",
-    "text": "query TeamsPageQuery {\n  teams {\n    edges {\n      node {\n        id\n        name\n        mode\n        state\n        createdAt\n        topic {\n          name\n          code\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query TeamsPageQuery {\n  teams {\n    edges {\n      node {\n        id\n        name\n        mode\n        state\n        createdAt\n        creator {\n          username\n          id\n        }\n        topic {\n          name\n          code\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '1d0c771ff81d6169a425b4d8d716fecc';
+(node as any).hash = 'e36bd104fce191d220d1d105a75def56';
 export default node;

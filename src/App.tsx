@@ -9,21 +9,28 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import PlayPage from './pages/PlayPage';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
 
 
 function App() {
   return (
     <>
-      <Router>
-      <Nav/>
-      <Container className="p-3">
-        <Switch>
-          <Route path="/teams">
-            <TeamsPage/> 
-          </Route>
-        </Switch>
-      </Container>
-      </Router>
+      <div className="d-flex flex-column flex-grow-1 h-100">
+
+        <Router>
+        <Nav/>
+          <Switch>
+            <Route path="/teams/:id" component={PlayPage}/>
+            <Route path="/teams" component={TeamsPage}/>
+            <Route path="/login" component={LoginPage}/>
+            <Route path="/" component={HomePage}/>
+            
+          </Switch>
+        </Router>
+        
+      </div>
     </>
   );
 }

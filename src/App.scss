@@ -1,1 +1,66 @@
+$theme-colors: (
+  "primary": #ea5b0c,
+  "dark": #113847,
+);
+$body-bg: #fdfdfd;
+$body-color: #333;
+
+
+html,body,#root {
+    height: 100%;
+}
+
+.cut-left {
+    position: relative;
+    overflow: hidden;
+    z-index:1;
+  }
+
+  .cut-left:before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -20%;
+    width: 30%;
+    bottom: -20%;
+    background: $body-bg;
+    transform: rotate(10deg);
+    z-index:2;
+  }
+
+  .cut-top {
+    position: relative;
+    overflow: hidden;
+    z-index:1;
+  }
+  .cut-top:before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -20%;
+    left: -20%;
+    height: 30%;
+    background: $body-bg;
+    z-index:2;
+    transform: rotate(-15deg);
+  }
+  
+  img.semi-transparent {
+    opacity:0.17;
+}
+.border-bottom-fat {
+    border-bottom: map-get($map: $theme-colors, $key: "primary") 0.3rem solid !important;
+}
+
+.border-top-fat {
+    border-top: map-get($map: $theme-colors, $key: "primary") 0.3rem solid !important;
+}
+
+.bg-light2 {
+  background-color: #eee;
+}
+
+
 @import "~bootstrap/scss/bootstrap";
+
+    
