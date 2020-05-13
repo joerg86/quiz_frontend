@@ -14,79 +14,21 @@ import { postQuestion } from "../lib/quiz";
 import Container from "react-bootstrap/Container";
 import CutImage from "../CutImage";
 import WaitImg from "../wait1.jpg";
+import WaitScreen from "./WaitScreen";
+
 
 const questionSchema = Yup.object().shape({
     question: Yup.string().required("Pflichtfeld"),
     modelAnswer: Yup.string().required("Pflichtfeld")
 })
 
-const mockUsers = [
-    { 
-        last_name: "Sawatzki",
-        first_name: "Jörg",
-        username: "joerg",
-        right: 1,
-        wrong: 1,
-        partial: 1,
-        creator: true,
-    },
-    { 
-        last_name: "Moch",
-        first_name: "Daniel",
-        username: "daniel",
-        right: 3,
-        wrong: 2,
-        partial: 0
-    },
-    { 
-        last_name: "Lapenat",
-        first_name: "Holger",
-        username: "holli",
-        right: 3,
-        wrong: 2,
-        partial: 1,
-        best: true,
-    },
-    { 
-        last_name: "Hahn",
-        first_name: "Max",
-        username: "max",
-        right: 4,
-        wrong: 2,
-        partial: 3
-    },
-    { 
-        last_name: "Brückmann",
-        first_name: "Tobias",
-        username: "tobias.brueckmann",
-        right: 5,
-        wrong: 0,
-        partial: 0
-    }
-]
-
 export default function QuestionPhase({team} : {team: QuizRenderer_team}) {
     if(team.userDone)
-        return (
-            <>
-            <div className="pt-3 px-3">
-                <h2 className="text-center">Erarbeitungsphase</h2>
-                <hr className="mb-0"/>
-            </div>
-            <Row noGutters className="align-items-center flex-grow-1 h-100">
-                <Col md={6} className="text-center">
-                    <Container className="p-5">
-                        <h4 className="m-3">Vielen Dank für deine Frage.</h4>
-                        <p className="lead m-3">
-                            Die anderen Mitspieler brauchen noch einen kleinen Moment. 
-                        </p>
-                        <i className="fas fa-spin fa-spinner fa-3x text-muted"></i>
-                    </Container>
-                </Col>
-                <CutImage src={WaitImg}/>
-            </Row>
-            </>
-        )
+        return <WaitScreen 
+            phase="Erarbeitungsphase" 
+            title="Vielen Dank für deine Frage." 
+            message="Die anderen Mitspieler brauchen noch einen kleinen Moment."
+            image={WaitImg}/>
     else
         return (
             <div className="p-3">

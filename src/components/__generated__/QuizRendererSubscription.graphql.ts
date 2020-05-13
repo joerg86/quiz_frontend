@@ -32,6 +32,8 @@ fragment QuizRenderer_team on TeamNode {
   id
   creator {
     username
+    firstName
+    lastName
     isMe
     id
   }
@@ -45,11 +47,6 @@ fragment QuizRenderer_team on TeamNode {
   mode
   state
   userDone
-  userQuestion {
-    id
-    question
-    modelAnswer
-  }
   currentQuestion {
     id
     question
@@ -58,7 +55,24 @@ fragment QuizRenderer_team on TeamNode {
       username
       lastName
       firstName
+      isMe
       id
+    }
+    answerSet {
+      edges {
+        node {
+          id
+          answer
+          score
+          author {
+            username
+            lastName
+            firstName
+            isMe
+            id
+          }
+        }
+      }
     }
   }
   members {
@@ -108,41 +122,46 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "firstName",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "question",
+  "name": "lastName",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "modelAnswer",
+  "name": "isMe",
   "storageKey": null
 },
-v7 = [
-  (v3/*: any*/),
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "lastName",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "firstName",
-    "storageKey": null
-  },
-  (v2/*: any*/)
-];
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "UserNode",
+  "kind": "LinkedField",
+  "name": "author",
+  "plural": false,
+  "selections": [
+    (v3/*: any*/),
+    (v5/*: any*/),
+    (v4/*: any*/),
+    (v6/*: any*/),
+    (v2/*: any*/)
+  ],
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -193,13 +212,9 @@ return {
             "plural": false,
             "selections": [
               (v3/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isMe",
-                "storageKey": null
-              },
+              (v4/*: any*/),
+              (v5/*: any*/),
+              (v6/*: any*/),
               (v2/*: any*/)
             ],
             "storageKey": null
@@ -211,7 +226,7 @@ return {
             "name": "createdAt",
             "storageKey": null
           },
-          (v4/*: any*/),
+          (v7/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -228,7 +243,7 @@ return {
                 "name": "code",
                 "storageKey": null
               },
-              (v4/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           },
@@ -258,34 +273,72 @@ return {
             "args": null,
             "concreteType": "QuestionNode",
             "kind": "LinkedField",
-            "name": "userQuestion",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "QuestionNode",
-            "kind": "LinkedField",
             "name": "currentQuestion",
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "UserNode",
+                "kind": "ScalarField",
+                "name": "question",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "modelAnswer",
+                "storageKey": null
+              },
+              (v8/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "AnswerNodeConnection",
                 "kind": "LinkedField",
-                "name": "author",
+                "name": "answerSet",
                 "plural": false,
-                "selections": (v7/*: any*/),
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "AnswerNodeEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "AnswerNode",
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          (v2/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "answer",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "score",
+                            "storageKey": null
+                          },
+                          (v8/*: any*/)
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
                 "storageKey": null
               }
             ],
@@ -314,7 +367,12 @@ return {
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
-                    "selections": (v7/*: any*/),
+                    "selections": [
+                      (v3/*: any*/),
+                      (v5/*: any*/),
+                      (v4/*: any*/),
+                      (v2/*: any*/)
+                    ],
                     "storageKey": null
                   }
                 ],
@@ -333,7 +391,7 @@ return {
     "metadata": {},
     "name": "QuizRendererSubscription",
     "operationKind": "subscription",
-    "text": "subscription QuizRendererSubscription(\n  $teamID: ID!\n) {\n  teamUpdated(id: $teamID) {\n    ...QuizRenderer_team\n    id\n  }\n}\n\nfragment QuizRenderer_team on TeamNode {\n  id\n  creator {\n    username\n    isMe\n    id\n  }\n  createdAt\n  name\n  topic {\n    id\n    code\n    name\n  }\n  mode\n  state\n  userDone\n  userQuestion {\n    id\n    question\n    modelAnswer\n  }\n  currentQuestion {\n    id\n    question\n    modelAnswer\n    author {\n      username\n      lastName\n      firstName\n      id\n    }\n  }\n  members {\n    edges {\n      node {\n        username\n        lastName\n        firstName\n        id\n      }\n    }\n  }\n}\n"
+    "text": "subscription QuizRendererSubscription(\n  $teamID: ID!\n) {\n  teamUpdated(id: $teamID) {\n    ...QuizRenderer_team\n    id\n  }\n}\n\nfragment QuizRenderer_team on TeamNode {\n  id\n  creator {\n    username\n    firstName\n    lastName\n    isMe\n    id\n  }\n  createdAt\n  name\n  topic {\n    id\n    code\n    name\n  }\n  mode\n  state\n  userDone\n  currentQuestion {\n    id\n    question\n    modelAnswer\n    author {\n      username\n      lastName\n      firstName\n      isMe\n      id\n    }\n    answerSet {\n      edges {\n        node {\n          id\n          answer\n          score\n          author {\n            username\n            lastName\n            firstName\n            isMe\n            id\n          }\n        }\n      }\n    }\n  }\n  members {\n    edges {\n      node {\n        username\n        lastName\n        firstName\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -20,55 +20,10 @@ import QuestionPhase from "./QuestionPhase";
 import AnswerPhase from "./AnswerPhase";
 import environment from "../lib/relayEnv";
 
-const mockUsers = [
-    { 
-        last_name: "Sawatzki",
-        first_name: "Jörg",
-        username: "joerg",
-        right: 1,
-        wrong: 1,
-        partial: 1,
-        creator: true,
-    },
-    { 
-        last_name: "Moch",
-        first_name: "Daniel",
-        username: "daniel",
-        right: 3,
-        wrong: 2,
-        partial: 0
-    },
-    { 
-        last_name: "Lapenat",
-        first_name: "Holger",
-        username: "holli",
-        right: 3,
-        wrong: 2,
-        partial: 1,
-        best: true,
-    },
-    { 
-        last_name: "Hahn",
-        first_name: "Max",
-        username: "max",
-        right: 4,
-        wrong: 2,
-        partial: 3
-    },
-    { 
-        last_name: "Brückmann",
-        first_name: "Tobias",
-        username: "tobias.brueckmann",
-        right: 5,
-        wrong: 0,
-        partial: 0
-    }
-]
-
 function QuizRenderer({team} : {team: QuizRenderer_team}) {
 
     useEffect(()=> {
-        requestSubscription(
+        return requestSubscription(
             environment,
             {
                 subscription: graphql`
@@ -87,7 +42,7 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
                     console.log(response);
                 }
             }
-        )
+        ).dispose;
     }, [team.id])
 
     return (
@@ -134,6 +89,9 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
                 {
                     (team.state == "ANSWER") && <AnswerPhase team={team}/>
                 }
+                {
+                    (team.state == "SCORING") && <ScoringPhase team={team}/>
+                }
             </Col>
         </Row>
     )
@@ -146,6 +104,8 @@ export default createFragmentContainer(
             id
             creator {
                 username
+                firstName
+                lastName
                 isMe
             }
             createdAt
@@ -158,11 +118,6 @@ export default createFragmentContainer(
             mode
             state
             userDone
-            userQuestion {
-                id
-                question
-                modelAnswer
-            }
             currentQuestion {
                 id
                 question
@@ -171,6 +126,22 @@ export default createFragmentContainer(
                     username
                     lastName
                     firstName
+                    isMe
+                }
+                answerSet {
+                    edges {
+                        node {
+                            id
+                            answer
+                            score
+                            author {
+                                username
+                                lastName
+                                firstName
+                                isMe
+                            }
+                        }
+                    }
                 }
             }
             members {

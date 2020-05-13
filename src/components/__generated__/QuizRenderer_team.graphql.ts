@@ -3,12 +3,15 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type AnswerScore = "A_0" | "A_1" | "A_3" | "%future added value";
 export type TeamMode = "COMPETITION" | "TRAIN" | "%future added value";
 export type TeamState = "ANSWER" | "ARCHIVED" | "DONE" | "OPEN" | "QUESTION" | "SCORING" | "%future added value";
 export type QuizRenderer_team = {
     readonly id: string;
     readonly creator: {
         readonly username: string;
+        readonly firstName: string;
+        readonly lastName: string;
         readonly isMe: boolean | null;
     };
     readonly createdAt: unknown;
@@ -21,11 +24,6 @@ export type QuizRenderer_team = {
     readonly mode: TeamMode;
     readonly state: TeamState;
     readonly userDone: boolean | null;
-    readonly userQuestion: {
-        readonly id: string;
-        readonly question: string;
-        readonly modelAnswer: string;
-    } | null;
     readonly currentQuestion: {
         readonly id: string;
         readonly question: string;
@@ -34,6 +32,22 @@ export type QuizRenderer_team = {
             readonly username: string;
             readonly lastName: string;
             readonly firstName: string;
+            readonly isMe: boolean | null;
+        };
+        readonly answerSet: {
+            readonly edges: ReadonlyArray<{
+                readonly node: {
+                    readonly id: string;
+                    readonly answer: string;
+                    readonly score: AnswerScore | null;
+                    readonly author: {
+                        readonly username: string;
+                        readonly lastName: string;
+                        readonly firstName: string;
+                        readonly isMe: boolean | null;
+                    };
+                } | null;
+            } | null>;
         };
     } | null;
     readonly members: {
@@ -74,40 +88,45 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "firstName",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "question",
+  "name": "lastName",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "modelAnswer",
+  "name": "isMe",
   "storageKey": null
 },
-v5 = [
-  (v1/*: any*/),
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "lastName",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "firstName",
-    "storageKey": null
-  }
-];
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "UserNode",
+  "kind": "LinkedField",
+  "name": "author",
+  "plural": false,
+  "selections": [
+    (v1/*: any*/),
+    (v3/*: any*/),
+    (v2/*: any*/),
+    (v4/*: any*/)
+  ],
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -124,13 +143,9 @@ return {
       "plural": false,
       "selections": [
         (v1/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isMe",
-          "storageKey": null
-        }
+        (v2/*: any*/),
+        (v3/*: any*/),
+        (v4/*: any*/)
       ],
       "storageKey": null
     },
@@ -141,7 +156,7 @@ return {
       "name": "createdAt",
       "storageKey": null
     },
-    (v2/*: any*/),
+    (v5/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -158,7 +173,7 @@ return {
           "name": "code",
           "storageKey": null
         },
-        (v2/*: any*/)
+        (v5/*: any*/)
       ],
       "storageKey": null
     },
@@ -188,34 +203,72 @@ return {
       "args": null,
       "concreteType": "QuestionNode",
       "kind": "LinkedField",
-      "name": "userQuestion",
-      "plural": false,
-      "selections": [
-        (v0/*: any*/),
-        (v3/*: any*/),
-        (v4/*: any*/)
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "QuestionNode",
-      "kind": "LinkedField",
       "name": "currentQuestion",
       "plural": false,
       "selections": [
         (v0/*: any*/),
-        (v3/*: any*/),
-        (v4/*: any*/),
         {
           "alias": null,
           "args": null,
-          "concreteType": "UserNode",
+          "kind": "ScalarField",
+          "name": "question",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "modelAnswer",
+          "storageKey": null
+        },
+        (v6/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "AnswerNodeConnection",
           "kind": "LinkedField",
-          "name": "author",
+          "name": "answerSet",
           "plural": false,
-          "selections": (v5/*: any*/),
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "AnswerNodeEdge",
+              "kind": "LinkedField",
+              "name": "edges",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "AnswerNode",
+                  "kind": "LinkedField",
+                  "name": "node",
+                  "plural": false,
+                  "selections": [
+                    (v0/*: any*/),
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "answer",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "score",
+                      "storageKey": null
+                    },
+                    (v6/*: any*/)
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         }
       ],
@@ -244,7 +297,11 @@ return {
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
-              "selections": (v5/*: any*/),
+              "selections": [
+                (v1/*: any*/),
+                (v3/*: any*/),
+                (v2/*: any*/)
+              ],
               "storageKey": null
             }
           ],
@@ -257,5 +314,5 @@ return {
   "type": "TeamNode"
 };
 })();
-(node as any).hash = '135df49e75248ae7a70f62922c10b754';
+(node as any).hash = '36f5cf31eed74004a2443474d575b950';
 export default node;

@@ -32,12 +32,9 @@ import { RelayObservable } from 'relay-runtime/lib/network/RelayObservable';
 
   const setupSubscription = (config, variables) => {
     const query = config.text
-    const subscriptionClient = new SubscriptionClient(`ws://localhost:8000/`,
+    const subscriptionClient = new SubscriptionClient(`ws://localhost:8000/?auth=${localStorage.getItem("jwt")}`,
       {
-        reconnect: true,
-        connectionParams: {
-          Authorization: "JWT " + localStorage.getItem("jwt")
-        },
+        reconnect: true
       });    
     return Observable.create<GraphQLResponse>(sink => {
         const c = subscriptionClient.request({ query, variables }).subscribe({

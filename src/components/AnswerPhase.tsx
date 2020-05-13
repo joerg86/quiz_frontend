@@ -12,59 +12,34 @@ import * as Yup from 'yup';
 import AnswerCard from "./AnswerCard";
 import QuestionCard from "./QuestionCard";
 import { QuizRenderer_team } from "./__generated__/QuizRenderer_team.graphql";
+import { postAnswer } from "../lib/quiz";
+import WaitScreen from "./WaitScreen";
+import WaitImg from "../wait2.jpg";
 
-const questionSchema = Yup.object().shape({
-    question: Yup.string().required("Pflichtfeld"),
-    modelAnswer: Yup.string().required("Pflichtfeld")
+const answerSchema = Yup.object().shape({
+    answer: Yup.string().required("Pflichtfeld"),
 })
 
-const mockUsers = [
-    { 
-        last_name: "Sawatzki",
-        first_name: "Jörg",
-        username: "joerg",
-        right: 1,
-        wrong: 1,
-        partial: 1,
-        creator: true,
-    },
-    { 
-        last_name: "Moch",
-        first_name: "Daniel",
-        username: "daniel",
-        right: 3,
-        wrong: 2,
-        partial: 0
-    },
-    { 
-        last_name: "Lapenat",
-        first_name: "Holger",
-        username: "holli",
-        right: 3,
-        wrong: 2,
-        partial: 1,
-        best: true,
-    },
-    { 
-        last_name: "Hahn",
-        first_name: "Max",
-        username: "max",
-        right: 4,
-        wrong: 2,
-        partial: 3
-    },
-    { 
-        last_name: "Brückmann",
-        first_name: "Tobias",
-        username: "tobias.brueckmann",
-        right: 5,
-        wrong: 0,
-        partial: 0
-    }
-]
-
 export default function AnswerPhase({team} : {team: QuizRenderer_team}) {
-    return (
+    if(team.userDone)
+    {
+        let title = "Vielen Dank für deine Antwort.";
+        let message = "Die anderen Mitspieler sind sicher auch gleich fertig.";
+
+        if(team.currentQuestion.author.isMe)
+        {
+            title = "Bitte einen Moment Geduld.";
+            message = "Die anderen Spieler beantworten gerade deine Frage.";
+        }
+
+        return <WaitScreen 
+            phase="Fragephase" 
+            title={title}
+            message={message}
+            image={WaitImg}/>
+    }
+    else
+        return (
         <div className="p-3">
         <h2 className="text-center">Fragephase</h2>
         <hr/>
@@ -74,22 +49,22 @@ export default function AnswerPhase({team} : {team: QuizRenderer_team}) {
         {team.currentQuestion && <QuestionCard question={team.currentQuestion}/> }
         <Formik
             initialValues={{
-                question: "",
-                modelAnswer: ""
+                answer: ""
             }}
+            validationSchema={answerSchema}
             onSubmit={(values, actions) => {
-                console.log("submit")
+                postAnswer(team.id, values.answer)
             }}
         >
-            {({values, errors, handleSubmit}) => (
+            {({values, errors, handleSubmit, isSubmitting}) => (
                 <FormikForm>
                     <Card>
                         <Card.Body>
                             <Card.Title>Deine Antwort</Card.Title>
-                                <Form.Control name="modelAnswer" as={Field} component="textarea"/>
+                                <Form.Control name="answer" as={Field} component="textarea"/>
                         </Card.Body>
                         <Card.Footer>
-                            <Button type="submit"><i className="fas fa-paper-plane"></i> Antwort senden</Button>
+                            <Button type="submit" disabled={isSubmitting}><i className="fas fa-paper-plane"></i> Antwort senden</Button>
                         </Card.Footer>
 
                     </Card>

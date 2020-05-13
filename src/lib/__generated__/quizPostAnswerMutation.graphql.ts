@@ -2,28 +2,30 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type quizNextPhaseMutationVariables = {
+export type quizPostAnswerMutationVariables = {
     teamID: string;
+    answer: string;
 };
-export type quizNextPhaseMutationResponse = {
-    readonly nextPhase: {
+export type quizPostAnswerMutationResponse = {
+    readonly postAnswer: {
         readonly team: {
             readonly id: string;
         } | null;
     } | null;
 };
-export type quizNextPhaseMutation = {
-    readonly response: quizNextPhaseMutationResponse;
-    readonly variables: quizNextPhaseMutationVariables;
+export type quizPostAnswerMutation = {
+    readonly response: quizPostAnswerMutationResponse;
+    readonly variables: quizPostAnswerMutationVariables;
 };
 
 
 
 /*
-mutation quizNextPhaseMutation(
+mutation quizPostAnswerMutation(
   $teamID: ID!
+  $answer: String!
 ) {
-  nextPhase(input: {id: $teamID}) {
+  postAnswer(input: {id: $teamID, answer: $answer}) {
     team {
       id
     }
@@ -38,6 +40,12 @@ var v0 = [
     "kind": "LocalArgument",
     "name": "teamID",
     "type": "ID!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "answer",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -48,6 +56,11 @@ v1 = [
         "fields": [
           {
             "kind": "Variable",
+            "name": "answer",
+            "variableName": "answer"
+          },
+          {
+            "kind": "Variable",
             "name": "id",
             "variableName": "teamID"
           }
@@ -56,9 +69,9 @@ v1 = [
         "name": "input"
       }
     ],
-    "concreteType": "NextPhaseMutationPayload",
+    "concreteType": "PostAnswerMutationPayload",
     "kind": "LinkedField",
-    "name": "nextPhase",
+    "name": "postAnswer",
     "plural": false,
     "selections": [
       {
@@ -88,7 +101,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "quizNextPhaseMutation",
+    "name": "quizPostAnswerMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation"
   },
@@ -96,17 +109,17 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "quizNextPhaseMutation",
+    "name": "quizPostAnswerMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "quizNextPhaseMutation",
+    "name": "quizPostAnswerMutation",
     "operationKind": "mutation",
-    "text": "mutation quizNextPhaseMutation(\n  $teamID: ID!\n) {\n  nextPhase(input: {id: $teamID}) {\n    team {\n      id\n    }\n  }\n}\n"
+    "text": "mutation quizPostAnswerMutation(\n  $teamID: ID!\n  $answer: String!\n) {\n  postAnswer(input: {id: $teamID, answer: $answer}) {\n    team {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '5eb36350b52d701888229d11dd8442eb';
+(node as any).hash = 'f332d794d8d07962dbca0cfcf048f859';
 export default node;

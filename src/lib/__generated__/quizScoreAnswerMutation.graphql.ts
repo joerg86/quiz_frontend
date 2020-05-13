@@ -2,29 +2,32 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type quizNextPhaseMutationVariables = {
-    teamID: string;
+export type ScoreEnum = "PARTIAL" | "RIGHT" | "WRONG" | "%future added value";
+export type quizScoreAnswerMutationVariables = {
+    answerID: string;
+    score: ScoreEnum;
 };
-export type quizNextPhaseMutationResponse = {
-    readonly nextPhase: {
-        readonly team: {
+export type quizScoreAnswerMutationResponse = {
+    readonly scoreAnswer: {
+        readonly answer: {
             readonly id: string;
         } | null;
     } | null;
 };
-export type quizNextPhaseMutation = {
-    readonly response: quizNextPhaseMutationResponse;
-    readonly variables: quizNextPhaseMutationVariables;
+export type quizScoreAnswerMutation = {
+    readonly response: quizScoreAnswerMutationResponse;
+    readonly variables: quizScoreAnswerMutationVariables;
 };
 
 
 
 /*
-mutation quizNextPhaseMutation(
-  $teamID: ID!
+mutation quizScoreAnswerMutation(
+  $answerID: ID!
+  $score: ScoreEnum!
 ) {
-  nextPhase(input: {id: $teamID}) {
-    team {
+  scoreAnswer(input: {id: $answerID, score: $score}) {
+    answer {
       id
     }
   }
@@ -36,8 +39,14 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "teamID",
+    "name": "answerID",
     "type": "ID!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "score",
+    "type": "ScoreEnum!"
   }
 ],
 v1 = [
@@ -49,24 +58,29 @@ v1 = [
           {
             "kind": "Variable",
             "name": "id",
-            "variableName": "teamID"
+            "variableName": "answerID"
+          },
+          {
+            "kind": "Variable",
+            "name": "score",
+            "variableName": "score"
           }
         ],
         "kind": "ObjectValue",
         "name": "input"
       }
     ],
-    "concreteType": "NextPhaseMutationPayload",
+    "concreteType": "ScoreAnswerMutationPayload",
     "kind": "LinkedField",
-    "name": "nextPhase",
+    "name": "scoreAnswer",
     "plural": false,
     "selections": [
       {
         "alias": null,
         "args": null,
-        "concreteType": "TeamNode",
+        "concreteType": "AnswerNode",
         "kind": "LinkedField",
-        "name": "team",
+        "name": "answer",
         "plural": false,
         "selections": [
           {
@@ -88,7 +102,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "quizNextPhaseMutation",
+    "name": "quizScoreAnswerMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation"
   },
@@ -96,17 +110,17 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "quizNextPhaseMutation",
+    "name": "quizScoreAnswerMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "quizNextPhaseMutation",
+    "name": "quizScoreAnswerMutation",
     "operationKind": "mutation",
-    "text": "mutation quizNextPhaseMutation(\n  $teamID: ID!\n) {\n  nextPhase(input: {id: $teamID}) {\n    team {\n      id\n    }\n  }\n}\n"
+    "text": "mutation quizScoreAnswerMutation(\n  $answerID: ID!\n  $score: ScoreEnum!\n) {\n  scoreAnswer(input: {id: $answerID, score: $score}) {\n    answer {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '5eb36350b52d701888229d11dd8442eb';
+(node as any).hash = '81d0012e1108624c0cb06bd13ae30997';
 export default node;
