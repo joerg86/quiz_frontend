@@ -58,7 +58,9 @@ export default function PlayPage() {
             }
         `}
         variables={{}}
-        render={({error, props, retry}) => (
+        render={({error, props, retry}) => {
+        window.setTimeout(retry, 3000);
+        return (
         <Row noGutters className="flex-grow-1 align-items-center h-100">
             <Col md={6} className="px-5">
                 <h1>Spielen</h1>
@@ -147,7 +149,7 @@ export default function PlayPage() {
             </Col>
             <CutImage src={PlayImage}/>
         </Row>
-        )}/>
+        )}}/>
         </>
     )
 }
