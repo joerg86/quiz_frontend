@@ -31,9 +31,8 @@ export type QuizRenderer_team = {
         readonly modelAnswer: string;
         readonly author: {
             readonly username: string;
-            readonly lastName: string;
-            readonly firstName: string;
             readonly isMe: boolean | null;
+            readonly " $fragmentRefs": FragmentRefs<"UserBadge_user">;
         };
         readonly answerSet: {
             readonly edges: ReadonlyArray<{
@@ -112,21 +111,6 @@ v5 = {
   "args": null,
   "kind": "ScalarField",
   "name": "name",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "UserNode",
-  "kind": "LinkedField",
-  "name": "author",
-  "plural": false,
-  "selections": [
-    (v1/*: any*/),
-    (v3/*: any*/),
-    (v2/*: any*/),
-    (v4/*: any*/)
-  ],
   "storageKey": null
 };
 return {
@@ -224,7 +208,24 @@ return {
           "name": "modelAnswer",
           "storageKey": null
         },
-        (v6/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "UserNode",
+          "kind": "LinkedField",
+          "name": "author",
+          "plural": false,
+          "selections": [
+            (v1/*: any*/),
+            (v4/*: any*/),
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "UserBadge_user"
+            }
+          ],
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -264,7 +265,21 @@ return {
                       "name": "score",
                       "storageKey": null
                     },
-                    (v6/*: any*/)
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "UserNode",
+                      "kind": "LinkedField",
+                      "name": "author",
+                      "plural": false,
+                      "selections": [
+                        (v1/*: any*/),
+                        (v3/*: any*/),
+                        (v2/*: any*/),
+                        (v4/*: any*/)
+                      ],
+                      "storageKey": null
+                    }
                   ],
                   "storageKey": null
                 }
@@ -318,5 +333,5 @@ return {
   "type": "TeamNode"
 };
 })();
-(node as any).hash = '039d820bc9654be8080a1ec5475b90b6';
+(node as any).hash = 'bfbbf2ddbf36f1b37a34d0090d20953e';
 export default node;

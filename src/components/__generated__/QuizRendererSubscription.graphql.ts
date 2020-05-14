@@ -53,8 +53,7 @@ fragment QuizRenderer_team on TeamNode {
     modelAnswer
     author {
       username
-      lastName
-      firstName
+      ...UserBadge_user
       isMe
       id
     }
@@ -85,6 +84,11 @@ fragment QuizRenderer_team on TeamNode {
       }
     }
   }
+}
+
+fragment UserBadge_user on UserNode {
+  firstName
+  lastName
 }
 */
 
@@ -144,22 +148,6 @@ v7 = {
   "args": null,
   "kind": "ScalarField",
   "name": "name",
-  "storageKey": null
-},
-v8 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "UserNode",
-  "kind": "LinkedField",
-  "name": "author",
-  "plural": false,
-  "selections": [
-    (v3/*: any*/),
-    (v5/*: any*/),
-    (v4/*: any*/),
-    (v6/*: any*/),
-    (v2/*: any*/)
-  ],
   "storageKey": null
 };
 return {
@@ -291,7 +279,22 @@ return {
                 "name": "modelAnswer",
                 "storageKey": null
               },
-              (v8/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "UserNode",
+                "kind": "LinkedField",
+                "name": "author",
+                "plural": false,
+                "selections": [
+                  (v3/*: any*/),
+                  (v4/*: any*/),
+                  (v5/*: any*/),
+                  (v6/*: any*/),
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -331,7 +334,22 @@ return {
                             "name": "score",
                             "storageKey": null
                           },
-                          (v8/*: any*/)
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "UserNode",
+                            "kind": "LinkedField",
+                            "name": "author",
+                            "plural": false,
+                            "selections": [
+                              (v3/*: any*/),
+                              (v5/*: any*/),
+                              (v4/*: any*/),
+                              (v6/*: any*/),
+                              (v2/*: any*/)
+                            ],
+                            "storageKey": null
+                          }
                         ],
                         "storageKey": null
                       }
@@ -391,7 +409,7 @@ return {
     "metadata": {},
     "name": "QuizRendererSubscription",
     "operationKind": "subscription",
-    "text": "subscription QuizRendererSubscription(\n  $teamID: ID!\n) {\n  teamUpdated(id: $teamID) {\n    ...QuizRenderer_team\n    id\n  }\n}\n\nfragment QuizRenderer_team on TeamNode {\n  id\n  creator {\n    id\n    username\n    firstName\n    lastName\n    isMe\n  }\n  createdAt\n  name\n  topic {\n    id\n    code\n    name\n  }\n  mode\n  state\n  userDone\n  currentQuestion {\n    id\n    question\n    modelAnswer\n    author {\n      username\n      lastName\n      firstName\n      isMe\n      id\n    }\n    answerSet {\n      edges {\n        node {\n          id\n          answer\n          score\n          author {\n            username\n            lastName\n            firstName\n            isMe\n            id\n          }\n        }\n      }\n    }\n  }\n  members {\n    edges {\n      node {\n        id\n        username\n        lastName\n        firstName\n      }\n    }\n  }\n}\n"
+    "text": "subscription QuizRendererSubscription(\n  $teamID: ID!\n) {\n  teamUpdated(id: $teamID) {\n    ...QuizRenderer_team\n    id\n  }\n}\n\nfragment QuizRenderer_team on TeamNode {\n  id\n  creator {\n    id\n    username\n    firstName\n    lastName\n    isMe\n  }\n  createdAt\n  name\n  topic {\n    id\n    code\n    name\n  }\n  mode\n  state\n  userDone\n  currentQuestion {\n    id\n    question\n    modelAnswer\n    author {\n      username\n      ...UserBadge_user\n      isMe\n      id\n    }\n    answerSet {\n      edges {\n        node {\n          id\n          answer\n          score\n          author {\n            username\n            lastName\n            firstName\n            isMe\n            id\n          }\n        }\n      }\n    }\n  }\n  members {\n    edges {\n      node {\n        id\n        username\n        lastName\n        firstName\n      }\n    }\n  }\n}\n\nfragment UserBadge_user on UserNode {\n  firstName\n  lastName\n}\n"
   }
 };
 })();

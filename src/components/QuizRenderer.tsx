@@ -19,6 +19,8 @@ import ScoringPhase from "./ScoringPhase";
 import QuestionPhase from "./QuestionPhase";
 import AnswerPhase from "./AnswerPhase";
 import environment from "../lib/relayEnv";
+import UserSelect from "./UserSelect";
+import { addMember } from "../lib/quiz";
 
 function QuizRenderer({team} : {team: QuizRenderer_team}) {
 
@@ -37,9 +39,6 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
                 `,
                 variables: {
                     teamID: team.id
-                },
-                onNext: (response) => {
-                    console.log(response);
                 }
             }
         ).dispose;
@@ -50,12 +49,8 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
             <Col lg={2} className="bg-light2 p-3">
                 <h3>{team.name}</h3>
                 <strong>{team.topic.code} {team.topic.name}</strong>
-                <InputGroup className="my-3">
-                    <Form.Control placeholder="@username"/>
-                    <InputGroup.Append>
-                        <Button variant="outline-success">+</Button>
-                    </InputGroup.Append>
-                </InputGroup>
+                <UserSelect value={null} className="my-2" placeholder="Mitglied hinzufügen..." onChange={(v) => addMember(team.id, v.value)}/>
+
                 { team.members.edges.map((edge) => 
                 <div>
                 <hr/>
@@ -127,8 +122,7 @@ export default createFragmentContainer(
                 modelAnswer
                 author {
                     username
-                    lastName
-                    firstName
+                    ...UserBadge_user
                     isMe
                 }
                 answerSet {

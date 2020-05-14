@@ -20,42 +20,52 @@ import { LinkContainer } from "react-router-bootstrap";
 import Container from "react-bootstrap/Container";
 import CutImage from "../CutImage";
 import PlayImage from "../play.jpg";
+import * as Yup from "yup";
+import {Form as FormikForm, Formik, Field} from "formik";
+import AsyncSelect from 'react-select/async';
+import { getTopics, createTeam } from "../lib/quiz";
+
+const teamSchema = Yup.object().shape({
+    name: Yup.string().required("Pflichtfeld"),
+    topic: Yup.object().required("Pflichtfeld")
+})
 
 export default function PlayPage() {
     return (
     <>
+        <QueryRenderer<TeamsPageQuery>
+        environment={environment}
+        query={graphql`
+            query TeamsPageQuery {
+                teams {
+                    edges {
+                        node {
+                            id
+                            name
+                            mode
+                            state
+                            createdAt
+                            creator {
+                                username
+                            }
+                            topic {
+                                name
+                                code
+                            }
+                        }
+                    }
+                }
+            }
+        `}
+        variables={{}}
+        render={({error, props, retry}) => (
         <Row noGutters className="flex-grow-1 align-items-center h-100">
             <Col md={6} className="px-5">
                 <h1>Spielen</h1>
                 <Card className="my-3">
                     <Card.Body>
                         <Card.Title>Meine Teams</Card.Title>
-                        <QueryRenderer<TeamsPageQuery>
-                            environment={environment}
-                            query={graphql`
-                                query TeamsPageQuery {
-                                    teams {
-                                        edges {
-                                            node {
-                                                id
-                                                name
-                                                mode
-                                                state
-                                                createdAt
-                                                creator {
-                                                    username
-                                                }
-                                                topic {
-                                                    name
-                                                    code
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                        `}
-                        variables={{}}
-                        render={({error, props}) => (
+
                             <Table striped hover size="sm" responsive>
                                 <thead>
                                     <tr>
@@ -93,34 +103,51 @@ export default function PlayPage() {
                                     ))}
                                 </tbody>
                             </Table>
-                        )}/>
                     </Card.Body>
                 </Card>
                 <Card bg="light" className="">
                     <Card.Body>
                         <Card.Title>Ein neues Team gründen</Card.Title>
-                            <Form>
-                                <Form.Group>
-                                    <Form.Label>Name</Form.Label>
-                                    <Form.Control name="name"/>
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>Thema</Form.Label>
-                                    <Form.Control name="topic"/>
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>Modus</Form.Label>
-                                    <Form.Control name="mode"/>
-                                </Form.Group>
-                                <Button variant="primary">
-                                    Team gründen
-                                </Button>
-                            </Form>
+                            <Formik
+                                validationSchema={teamSchema}
+                                initialValues={{
+                                    name: "",
+                                    topic: null
+                                }}
+                                onSubmit={(values, actions) => {
+                                        createTeam(values.name, values.topic.value, () => retry())
+                                    }
+                                }
+                            >
+                                {({values, errors, isSubmitting, setFieldValue}) => 
+                                <FormikForm>
+                                    <Form.Group>
+                                        <Form.Label>Name</Form.Label>
+                                        <Form.Control name="name" as={Field}/>
+                                    </Form.Group>
+                                    <Form.Group>
+                                        <Form.Label>Thema</Form.Label>
+                                        <AsyncSelect
+                                            placeholder="Thema wählen..."
+                                            cacheOptions 
+                                            loadOptions={getTopics} 
+                                            noOptionsMessage={(v) => "Bitte Suchbegriff eingeben..."} 
+                                            onChange={(value) => setFieldValue("topic", value)}
+                                           
+                                        />
+                                    </Form.Group>
+                                    <Button variant="primary" type="submit">
+                                        Team gründen
+                                    </Button>
+                                </FormikForm>
+                                }
+                            </Formik>
                     </Card.Body>
                 </Card>
             </Col>
             <CutImage src={PlayImage}/>
         </Row>
+        )}/>
         </>
     )
 }
