@@ -9,12 +9,15 @@ import {
 
   import { SubscriptionClient } from 'subscriptions-transport-ws'
 import { RelayObservable } from 'relay-runtime/lib/network/RelayObservable';
-  
+
+  const API_URL = process.env.REACT_APP_API_URL;
+  const WS_URL = process.env.REACT_APP_WS_URL;
+
   function fetchQuery(
     operation : any,
     variables : any,
   ) {
-    return fetch('http://localhost:8000/', {
+    return fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -32,7 +35,7 @@ import { RelayObservable } from 'relay-runtime/lib/network/RelayObservable';
 
   const setupSubscription = (config, variables) => {
     const query = config.text
-    const subscriptionClient = new SubscriptionClient(`ws://localhost:8000/?auth=${localStorage.getItem("jwt")}`,
+    const subscriptionClient = new SubscriptionClient(`${WS_URL}?auth=${localStorage.getItem("jwt")}`,
       {
         reconnect: true
       });    

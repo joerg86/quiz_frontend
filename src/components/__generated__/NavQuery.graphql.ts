@@ -2,13 +2,11 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
 export type NavQueryVariables = {};
 export type NavQueryResponse = {
     readonly me: {
         readonly firstName: string;
         readonly lastName: string;
-        readonly " $fragmentRefs": FragmentRefs<"UserBadge_user">;
     } | null;
 };
 export type NavQuery = {
@@ -21,16 +19,10 @@ export type NavQuery = {
 /*
 query NavQuery {
   me {
-    ...UserBadge_user
     firstName
     lastName
     id
   }
-}
-
-fragment UserBadge_user on UserNode {
-  firstName
-  lastName
 }
 */
 
@@ -65,12 +57,7 @@ return {
         "plural": false,
         "selections": [
           (v0/*: any*/),
-          (v1/*: any*/),
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "UserBadge_user"
-          }
+          (v1/*: any*/)
         ],
         "storageKey": null
       }
@@ -110,9 +97,9 @@ return {
     "metadata": {},
     "name": "NavQuery",
     "operationKind": "query",
-    "text": "query NavQuery {\n  me {\n    ...UserBadge_user\n    firstName\n    lastName\n    id\n  }\n}\n\nfragment UserBadge_user on UserNode {\n  firstName\n  lastName\n}\n"
+    "text": "query NavQuery {\n  me {\n    firstName\n    lastName\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd201fd61f94f04a1b9d334efb7d9fa09';
+(node as any).hash = '3ea1ac3537745e0337b48dcd868d4d6d';
 export default node;

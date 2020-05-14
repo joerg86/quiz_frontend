@@ -23,7 +23,6 @@ export default function Appbar() {
         query={graphql`
             query NavQuery {
                 me {
-                    ...UserBadge_user
                     firstName
                     lastName
                 }
@@ -42,9 +41,11 @@ export default function Appbar() {
                                     <Nav.Link className="m-1"><i className="fas fa-home"></i> Home</Nav.Link>
                                 </LinkContainer>
 
-                                <LinkContainer to="/teams">
-                                    <Nav.Link className="m-1"><i className="fas fa-users"></i> Spielen</Nav.Link>
-                                </LinkContainer>
+                                { (props && props.me) && 
+                                    <LinkContainer to="/teams">
+                                        <Nav.Link className="m-1"><i className="fas fa-users"></i> Spielen</Nav.Link>
+                                    </LinkContainer>
+                                }
                 
                                 <LinkContainer to="/kb">
                                     <Nav.Link className="m-1"><i className="fas fa-question-circle"></i> Knowledge Base</Nav.Link>
