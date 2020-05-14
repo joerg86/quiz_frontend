@@ -9,6 +9,7 @@ export type TeamState = "ANSWER" | "ARCHIVED" | "DONE" | "OPEN" | "QUESTION" | "
 export type QuizRenderer_team = {
     readonly id: string;
     readonly creator: {
+        readonly id: string;
         readonly username: string;
         readonly firstName: string;
         readonly lastName: string;
@@ -53,6 +54,7 @@ export type QuizRenderer_team = {
     readonly members: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly id: string;
                 readonly username: string;
                 readonly lastName: string;
                 readonly firstName: string;
@@ -142,6 +144,7 @@ return {
       "name": "creator",
       "plural": false,
       "selections": [
+        (v0/*: any*/),
         (v1/*: any*/),
         (v2/*: any*/),
         (v3/*: any*/),
@@ -298,6 +301,7 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
+                (v0/*: any*/),
                 (v1/*: any*/),
                 (v3/*: any*/),
                 (v2/*: any*/)
@@ -314,5 +318,5 @@ return {
   "type": "TeamNode"
 };
 })();
-(node as any).hash = '36f5cf31eed74004a2443474d575b950';
+(node as any).hash = '039d820bc9654be8080a1ec5475b90b6';
 export default node;

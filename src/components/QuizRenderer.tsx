@@ -64,7 +64,9 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
                         <Avatar size="60" name={edge.node.firstName + " " + edge.node.lastName} round/>
                     </Col>
                     <Col>
-                        <h6>{edge.node.firstName} {edge.node.lastName} { false && <i className="fas fa-shield-alt"></i>} { false && <i className="fas fa-crown"></i>}
+                        <h6>{edge.node.firstName} {edge.node.lastName}<span> </span>
+                        { (edge.node.id == team.creator.id) && <><i className="fas fa-shield-alt"></i><span> </span></>} 
+                        { false && <i className="fas fa-crown"></i>}
 
                         <br/><small className="text-muted">@{edge.node.username}</small></h6>
                         <div className="text-muted">
@@ -103,6 +105,7 @@ export default createFragmentContainer(
         fragment QuizRenderer_team on TeamNode {
             id
             creator {
+                id
                 username
                 firstName
                 lastName
@@ -147,6 +150,7 @@ export default createFragmentContainer(
             members {
                 edges {
                     node {
+                        id
                         username
                         lastName
                         firstName

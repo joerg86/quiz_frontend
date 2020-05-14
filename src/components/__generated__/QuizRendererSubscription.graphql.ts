@@ -31,11 +31,11 @@ subscription QuizRendererSubscription(
 fragment QuizRenderer_team on TeamNode {
   id
   creator {
+    id
     username
     firstName
     lastName
     isMe
-    id
   }
   createdAt
   name
@@ -78,10 +78,10 @@ fragment QuizRenderer_team on TeamNode {
   members {
     edges {
       node {
+        id
         username
         lastName
         firstName
-        id
       }
     }
   }
@@ -211,11 +211,11 @@ return {
             "name": "creator",
             "plural": false,
             "selections": [
+              (v2/*: any*/),
               (v3/*: any*/),
               (v4/*: any*/),
               (v5/*: any*/),
-              (v6/*: any*/),
-              (v2/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
@@ -368,10 +368,10 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
+                      (v2/*: any*/),
                       (v3/*: any*/),
                       (v5/*: any*/),
-                      (v4/*: any*/),
-                      (v2/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -391,7 +391,7 @@ return {
     "metadata": {},
     "name": "QuizRendererSubscription",
     "operationKind": "subscription",
-    "text": "subscription QuizRendererSubscription(\n  $teamID: ID!\n) {\n  teamUpdated(id: $teamID) {\n    ...QuizRenderer_team\n    id\n  }\n}\n\nfragment QuizRenderer_team on TeamNode {\n  id\n  creator {\n    username\n    firstName\n    lastName\n    isMe\n    id\n  }\n  createdAt\n  name\n  topic {\n    id\n    code\n    name\n  }\n  mode\n  state\n  userDone\n  currentQuestion {\n    id\n    question\n    modelAnswer\n    author {\n      username\n      lastName\n      firstName\n      isMe\n      id\n    }\n    answerSet {\n      edges {\n        node {\n          id\n          answer\n          score\n          author {\n            username\n            lastName\n            firstName\n            isMe\n            id\n          }\n        }\n      }\n    }\n  }\n  members {\n    edges {\n      node {\n        username\n        lastName\n        firstName\n        id\n      }\n    }\n  }\n}\n"
+    "text": "subscription QuizRendererSubscription(\n  $teamID: ID!\n) {\n  teamUpdated(id: $teamID) {\n    ...QuizRenderer_team\n    id\n  }\n}\n\nfragment QuizRenderer_team on TeamNode {\n  id\n  creator {\n    id\n    username\n    firstName\n    lastName\n    isMe\n  }\n  createdAt\n  name\n  topic {\n    id\n    code\n    name\n  }\n  mode\n  state\n  userDone\n  currentQuestion {\n    id\n    question\n    modelAnswer\n    author {\n      username\n      lastName\n      firstName\n      isMe\n      id\n    }\n    answerSet {\n      edges {\n        node {\n          id\n          answer\n          score\n          author {\n            username\n            lastName\n            firstName\n            isMe\n            id\n          }\n        }\n      }\n    }\n  }\n  members {\n    edges {\n      node {\n        id\n        username\n        lastName\n        firstName\n      }\n    }\n  }\n}\n"
   }
 };
 })();
