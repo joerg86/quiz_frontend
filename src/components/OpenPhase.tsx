@@ -43,7 +43,7 @@ export default function OpenPhase({team} : {team: QuizRenderer_team}) {
                         </p>
                     }
                     {team.creator.isMe &&
-                        <Col md={6} className="mx-auto mt-5 p-3">
+                        <Col md={6} className="mx-auto mt-5 p-3 bg-light">
                             <h5 className="m-3">Weitere Mitglieder hinzufügen</h5>
                             <UserSelect value={null} className="" placeholder="Mitglied hinzufügen..." onChange={(v) => addMember(team.id, v.value)}/>
                         </Col>
