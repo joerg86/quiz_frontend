@@ -13,11 +13,11 @@ import { RelayObservable } from 'relay-runtime/lib/network/RelayObservable';
   const API_URL = process.env.REACT_APP_API_URL;
   const WS_URL = process.env.REACT_APP_WS_URL;
 
-  function fetchQuery(
+  async function fetchQuery(
     operation : any,
     variables : any,
   ) {
-    return fetch(API_URL, {
+    const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,9 +27,14 @@ import { RelayObservable } from 'relay-runtime/lib/network/RelayObservable';
         query: operation.text,
         variables,
       }),
-    }).then(response => {
-      return response.json();
     });
+
+    const result = await response.json();
+      if (result && result.errors) {
+        return {data: null, errors: result.errors};
+      }
+      return result;
+    
   }
 
 
@@ -42,7 +47,6 @@ import { RelayObservable } from 'relay-runtime/lib/network/RelayObservable';
     return Observable.create<GraphQLResponse>(sink => {
         const c = subscriptionClient.request({ query, variables }).subscribe({
           next: result => {
-            console.log(result)
             sink.next({data: result.data})
           }
         });

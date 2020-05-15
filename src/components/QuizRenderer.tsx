@@ -20,12 +20,15 @@ import QuestionPhase from "./QuestionPhase";
 import AnswerPhase from "./AnswerPhase";
 import environment from "../lib/relayEnv";
 import UserSelect from "./UserSelect";
-import { addMember } from "../lib/quiz";
+import { addMember, removeMember } from "../lib/quiz";
+import { useHistory } from "react-router-dom";
+import { QuizRendererSubscription } from "./__generated__/QuizRendererSubscription.graphql";
 
 function QuizRenderer({team} : {team: QuizRenderer_team}) {
+    const history = useHistory();
 
     useEffect(()=> {
-        return requestSubscription(
+        return requestSubscription<QuizRendererSubscription>(
             environment,
             {
                 subscription: graphql`
@@ -39,6 +42,10 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
                 `,
                 variables: {
                     teamID: team.id
+                },
+                onNext: (response) => {
+                    if(response.teamUpdated === null)
+                        history.push("/teams")
                 }
             }
         ).dispose;
@@ -46,7 +53,7 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
 
     return (
         <Row noGutters className="h-100">
-            <Col lg={2} className="bg-light2 p-3">
+            <Col xl={2} lg={3} className="bg-light2 p-3">
                 <h3>{team.name}</h3>
                 <strong>{team.topic.code} {team.topic.name}</strong>
 
@@ -61,6 +68,11 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
                         <h6>{edge.node.firstName} {edge.node.lastName}<span> </span>
                         { (edge.node.id == team.creator.id) && <><i className="fas fa-shield-alt"></i><span> </span></>} 
                         { false && <i className="fas fa-crown"></i>}
+                        { team.creator.isMe && !edge.node.isMe && ((team.state == "OPEN") || (team.state == "DONE")) &&
+                            <Button onClick={(e) => {removeMember(team.id, edge.node.username)}} className="float-right" size="sm" variant="light"
+                                title={`${edge.node.firstName} ${edge.node.lastName} entfernen`} href="">
+                                <i className="fas fa-times text-danger"></i>
+                            </Button>}
 
                         <br/><small className="text-muted">@{edge.node.username}</small></h6>
                         <div className="text-muted">
@@ -75,7 +87,7 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
                 )}
             </Col>
 
-            <Col lg={10} className="h-100 d-flex flex-column">
+            <Col xl={10} lg={9} className="h-100 d-flex flex-column">
                 {
                     (team.state == "OPEN" || team.state == "DONE") && <OpenPhase team={team}/>
                 }
@@ -148,6 +160,7 @@ export default createFragmentContainer(
                         username
                         lastName
                         firstName
+                        isMe
                     }
                 }
             }

@@ -58,6 +58,7 @@ export type QuizRenderer_team = {
                 readonly username: string;
                 readonly lastName: string;
                 readonly firstName: string;
+                readonly isMe: boolean | null;
             } | null;
         } | null>;
     };
@@ -322,7 +323,8 @@ return {
                 (v0/*: any*/),
                 (v1/*: any*/),
                 (v3/*: any*/),
-                (v2/*: any*/)
+                (v2/*: any*/),
+                (v4/*: any*/)
               ],
               "storageKey": null
             }
@@ -336,5 +338,5 @@ return {
   "type": "TeamNode"
 };
 })();
-(node as any).hash = '7bad3c12871cc5d321c3faee96cb37d8';
+(node as any).hash = 'bf952a24b1ae9955e9fcc2ab21499635';
 export default node;

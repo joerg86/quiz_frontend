@@ -164,6 +164,33 @@ export function addMember(teamId : string, username : string, onCompleted?: ({er
     )
 }
 
+export function removeMember(teamId : string, username : string, onCompleted?: ({error, response}) => void) {
+    return commitMutation(
+        environment,
+        {
+            mutation: graphql`
+                mutation quizRemoveMemberMutation(
+                    $teamId: ID!,
+                    $username: String!
+                ) {
+                    removeMember(input: { 
+                            teamId: $teamId,
+                            username: $username
+                        }) 
+                    {
+                        team {
+                            id
+                        }   
+                    }
+                }
+            `,
+            variables: { teamId, username },
+            onCompleted
+
+        }
+    )
+}
+
 export async function getTopics(query: string) {
     let data = await fetchQuery<quizTopicsQuery>(
         environment,

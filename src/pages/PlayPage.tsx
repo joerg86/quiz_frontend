@@ -1,6 +1,6 @@
 import React from "react";
 import { QueryRenderer } from "react-relay";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Redirect } from "react-router-dom";
 import { PlayPageQuery } from "./__generated__/PlayPageQuery.graphql"; 
 import environment from "../lib/relayEnv";
 import graphql from 'babel-plugin-relay/macro';
@@ -33,7 +33,7 @@ export default function PlayPage() {
                 render={({error, props}) => {
                     if(error)
                     {
-                        return <h1>Error</h1>;
+                        return <Redirect to="/teams"/>;
                     }
                     if(props) {
                         return (
