@@ -14,7 +14,9 @@ import QuestionCard from "./QuestionCard";
 import { QuizRenderer_team } from "./__generated__/QuizRenderer_team.graphql";
 import { postAnswer } from "../lib/quiz";
 import WaitScreen from "./WaitScreen";
+import AnswerImg from "../answer.jpg";
 import WaitImg from "../wait2.jpg";
+import CutImage from "../CutImage";
 
 const answerSchema = Yup.object().shape({
     answer: Yup.string().required("Pflichtfeld"),
@@ -40,38 +42,46 @@ export default function AnswerPhase({team} : {team: QuizRenderer_team}) {
     }
     else
         return (
-        <div className="p-3">
-        <h2 className="text-center">Fragephase</h2>
-        <hr/>
-        <Alert variant="info">
-            <i className="fas fa-info-circle"></i> In dieser Phase beantwortest du die Fragen der anderen Mitspieler.
-        </Alert>
-        {team.currentQuestion && <QuestionCard question={team.currentQuestion}/> }
-        <Formik
-            initialValues={{
-                answer: ""
-            }}
-            validationSchema={answerSchema}
-            onSubmit={(values, actions) => {
-                postAnswer(team.id, values.answer)
-            }}
-        >
-            {({values, errors, handleSubmit, isSubmitting}) => (
-                <FormikForm>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Deine Antwort</Card.Title>
-                                <Form.Control name="answer" as={Field} component="textarea"/>
-                        </Card.Body>
-                        <Card.Footer>
-                            <Button type="submit" disabled={isSubmitting}><i className="fas fa-paper-plane"></i> Antwort senden</Button>
-                        </Card.Footer>
+        <>
+            <div className="pt-3 px-3">
+                <h2 className="text-center">Fragephase</h2>
+                <hr className="mb-0"/>
+            </div>
+            <Row noGutters className="align-items-start flex-grow-1 h-100">
+                <Col md={6} className="p-3 mx-auto">
 
-                    </Card>
-                </FormikForm>
+                <Alert variant="info">
+                    <i className="fas fa-info-circle"></i> In dieser Phase beantwortest du die Fragen der anderen Mitspieler.
+                </Alert>
+                {team.currentQuestion && <QuestionCard question={team.currentQuestion}/> }
+                <Formik
+                    initialValues={{
+                        answer: ""
+                    }}
+                    validationSchema={answerSchema}
+                    onSubmit={(values, actions) => {
+                        postAnswer(team.id, values.answer)
+                    }}
+                >
+                    {({values, errors, handleSubmit, isSubmitting}) => (
+                        <FormikForm>
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>Deine Antwort</Card.Title>
+                                        <Form.Control name="answer" as={Field} component="textarea" rows={5}/>
+                                </Card.Body>
+                                <Card.Footer>
+                                    <Button type="submit" disabled={isSubmitting}><i className="fas fa-paper-plane"></i> Antwort senden</Button>
+                                </Card.Footer>
 
-                )}
-        </Formik>
-        </div>
+                            </Card>
+                        </FormikForm>
+
+                        )}
+                </Formik>
+                </Col>
+                <CutImage src={AnswerImg}/>
+            </Row>
+        </>
     )
 }
