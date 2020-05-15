@@ -66,7 +66,7 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
                     </Col>
                     <Col>
                         <h6>{edge.node.user.firstName} {edge.node.user.lastName}<span> </span>
-                        { (edge.node.id == team.creator.id) && <><i className="fas fa-shield-alt"></i><span> </span></>} 
+                        { (edge.node.user.id == team.creator.id) && <><i className="fas fa-shield-alt"></i><span> </span></>} 
                         { false && <i className="fas fa-crown"></i>}
                         { team.creator.isMe && !edge.node.user.isMe && ((team.state == "OPEN") || (team.state == "DONE")) &&
                             <Button onClick={(e) => {removeMember(team.id, edge.node.user.username)}} className="float-right" size="sm" variant="light"
