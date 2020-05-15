@@ -61,8 +61,8 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
                 <div key={edge.node.id}>
                 <hr/>
                 <Row>
-                    <Col xs="auto">
-                        <Avatar size="60" name={edge.node.user.firstName + " " + edge.node.user.lastName} round/>
+                    <Col xs="auto" style={{width: "3.2em"}}>
+                        <Avatar size="2.5em" name={edge.node.user.firstName + " " + edge.node.user.lastName} round/>
                     </Col>
                     <Col>
                         <h6>{edge.node.user.firstName} {edge.node.user.lastName}<span> </span>
@@ -76,15 +76,16 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
 
                         <br/><small className="text-muted">@{edge.node.user.username}</small></h6>
                         <div className="text-muted">
-
-                            <Badge variant="success" pill>{edge.node.right}</Badge><span> </span>
-                            <Badge variant="warning" pill>{edge.node.partial}</Badge><span> </span>
-                            <Badge variant="danger" pill>{edge.node.wrong}</Badge>
+                            <Badge variant="success" pill><i className="fas fa-fw fa-check-double"></i> {edge.node.right}</Badge><span> </span>
+                            <Badge variant="warning" pill><i className="fas fa-fw fa-check"></i> {edge.node.partial}</Badge><span> </span>
+                            <Badge variant="danger" pill><i className="fas fa-fw fa-times"></i> {edge.node.wrong}</Badge><span> </span>
+                            <Badge variant="dark" pill><i className="fas fa-fw fa-star"></i> {edge.node.score}</Badge>
                         </div>
                     </Col>
                 </Row>
                 </div>
                 )}
+
             </Col>
 
             <Col xl={10} lg={9} className="h-100 d-flex flex-column">
