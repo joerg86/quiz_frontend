@@ -34,9 +34,14 @@ export default function OpenPhase({team} : {team: QuizRenderer_team}) {
                     </p>
 
                     { team.creator.isMe ?
+                        (team.members.edges.length >= 2) ?
                         <Button size="lg" className="m-3" onClick={() => nextPhase(team.id)}>
                             <i className="fas fa-play"></i> Neue Runde starten
                         </Button>
+                        :
+                        <p className="text-muted">
+                            <i className="fas fa-info-circle"></i> Um die Runde zu starten, muss das Team mindestens zwei Mitglieder haben.
+                        </p>
                         :
                         <p className="text-muted">
                             <i className="fas fa-shield-alt"></i> Nur {team.creator.firstName + " " + team.creator.lastName} kann eine neue Runde starten.  
