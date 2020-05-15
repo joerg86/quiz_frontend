@@ -39,7 +39,7 @@ export default function OpenPhase({team} : {team: QuizRenderer_team}) {
                         </Button>
                         :
                         <p className="text-muted">
-                            <i className="fas fa-info-circle"></i> Nur {team.creator.firstName + " " + team.creator.lastName} kann eine neue Runde starten.  
+                            <i className="fas fa-shield-alt"></i> Nur {team.creator.firstName + " " + team.creator.lastName} kann eine neue Runde starten.  
                         </p>
                     }
                     {team.creator.isMe &&
