@@ -34,7 +34,7 @@ export default function OpenPhase({team} : {team: QuizRenderer_team}) {
                     </p>
 
                     { team.creator.isMe ?
-                        (team.members.edges.length >= 2) ?
+                        (team.membershipSet.edges.length >= 2) ?
                         <Button size="lg" className="m-3" onClick={() => nextPhase(team.id)}>
                             <i className="fas fa-play"></i> Neue Runde starten
                         </Button>
@@ -44,7 +44,7 @@ export default function OpenPhase({team} : {team: QuizRenderer_team}) {
                         </p>
                         :
                         <p className="text-muted">
-                            <i className="fas fa-shield-alt"></i> Nur {team.creator.firstName + " " + team.creator.lastName} kann eine neue Runde starten.  
+                            <i className="fas fa-shield-alt"></i> Nur <em>{team.creator.firstName + " " + team.creator.lastName}</em> kann eine neue Runde starten.  
                         </p>
                     }
                     {team.creator.isMe &&

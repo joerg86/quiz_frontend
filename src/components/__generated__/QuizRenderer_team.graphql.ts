@@ -51,14 +51,21 @@ export type QuizRenderer_team = {
             } | null>;
         };
     } | null;
-    readonly members: {
+    readonly membershipSet: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly username: string;
-                readonly lastName: string;
-                readonly firstName: string;
-                readonly isMe: boolean | null;
+                readonly user: {
+                    readonly id: string;
+                    readonly username: string;
+                    readonly lastName: string;
+                    readonly firstName: string;
+                    readonly isMe: boolean | null;
+                };
+                readonly right: number;
+                readonly wrong: number;
+                readonly partial: number;
+                readonly score: number | null;
             } | null;
         } | null>;
     };
@@ -119,6 +126,13 @@ v6 = {
   "args": null,
   "kind": "FragmentSpread",
   "name": "UserBadge_user"
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "score",
+  "storageKey": null
 };
 return {
   "argumentDefinitions": [],
@@ -261,13 +275,7 @@ return {
                       "name": "answer",
                       "storageKey": null
                     },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "score",
-                      "storageKey": null
-                    },
+                    (v7/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -299,15 +307,15 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "UserNodeConnection",
+      "concreteType": "MembershipNodeConnection",
       "kind": "LinkedField",
-      "name": "members",
+      "name": "membershipSet",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "UserNodeEdge",
+          "concreteType": "MembershipNodeEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -315,16 +323,50 @@ return {
             {
               "alias": null,
               "args": null,
-              "concreteType": "UserNode",
+              "concreteType": "MembershipNode",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
               "selections": [
                 (v0/*: any*/),
-                (v1/*: any*/),
-                (v3/*: any*/),
-                (v2/*: any*/),
-                (v4/*: any*/)
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "UserNode",
+                  "kind": "LinkedField",
+                  "name": "user",
+                  "plural": false,
+                  "selections": [
+                    (v0/*: any*/),
+                    (v1/*: any*/),
+                    (v3/*: any*/),
+                    (v2/*: any*/),
+                    (v4/*: any*/)
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "right",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "wrong",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "partial",
+                  "storageKey": null
+                },
+                (v7/*: any*/)
               ],
               "storageKey": null
             }
@@ -338,5 +380,5 @@ return {
   "type": "TeamNode"
 };
 })();
-(node as any).hash = 'bf952a24b1ae9955e9fcc2ab21499635';
+(node as any).hash = 'ee27089c1612d5d958f81574969134a8';
 export default node;

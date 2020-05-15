@@ -57,29 +57,29 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
                 <h3>{team.name}</h3>
                 <strong>{team.topic.code} {team.topic.name}</strong>
 
-                { team.members.edges.map((edge) => 
+                { team.membershipSet.edges.map((edge) => 
                 <div key={edge.node.id}>
                 <hr/>
                 <Row>
                     <Col xs="auto">
-                        <Avatar size="60" name={edge.node.firstName + " " + edge.node.lastName} round/>
+                        <Avatar size="60" name={edge.node.user.firstName + " " + edge.node.user.lastName} round/>
                     </Col>
                     <Col>
-                        <h6>{edge.node.firstName} {edge.node.lastName}<span> </span>
+                        <h6>{edge.node.user.firstName} {edge.node.user.lastName}<span> </span>
                         { (edge.node.id == team.creator.id) && <><i className="fas fa-shield-alt"></i><span> </span></>} 
                         { false && <i className="fas fa-crown"></i>}
-                        { team.creator.isMe && !edge.node.isMe && ((team.state == "OPEN") || (team.state == "DONE")) &&
-                            <Button onClick={(e) => {removeMember(team.id, edge.node.username)}} className="float-right" size="sm" variant="light"
-                                title={`${edge.node.firstName} ${edge.node.lastName} entfernen`} href="">
+                        { team.creator.isMe && !edge.node.user.isMe && ((team.state == "OPEN") || (team.state == "DONE")) &&
+                            <Button onClick={(e) => {removeMember(team.id, edge.node.user.username)}} className="float-right" size="sm" variant="light"
+                                title={`${edge.node.user.firstName} ${edge.node.user.lastName} entfernen`} href="">
                                 <i className="fas fa-times text-danger"></i>
                             </Button>}
 
-                        <br/><small className="text-muted">@{edge.node.username}</small></h6>
+                        <br/><small className="text-muted">@{edge.node.user.username}</small></h6>
                         <div className="text-muted">
 
-                            <Badge variant="success" pill>0</Badge><span> </span>
-                            <Badge variant="warning" pill>0</Badge><span> </span>
-                            <Badge variant="danger" pill>0</Badge>
+                            <Badge variant="success" pill>{edge.node.right}</Badge><span> </span>
+                            <Badge variant="warning" pill>{edge.node.partial}</Badge><span> </span>
+                            <Badge variant="danger" pill>{edge.node.wrong}</Badge>
                         </div>
                     </Col>
                 </Row>
@@ -153,14 +153,21 @@ export default createFragmentContainer(
                     }
                 }
             }
-            members {
+            membershipSet {
                 edges {
                     node {
                         id
-                        username
-                        lastName
-                        firstName
-                        isMe
+                        user {
+                            id
+                            username
+                            lastName
+                            firstName
+                            isMe
+                        }
+                        right
+                        wrong
+                        partial
+                        score
                     }
                 }
             }

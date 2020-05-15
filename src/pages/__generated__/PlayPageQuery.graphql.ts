@@ -75,14 +75,21 @@ fragment QuizRenderer_team on TeamNode {
       }
     }
   }
-  members {
+  membershipSet {
     edges {
       node {
         id
-        username
-        lastName
-        firstName
-        isMe
+        user {
+          id
+          username
+          lastName
+          firstName
+          isMe
+        }
+        right
+        wrong
+        partial
+        score
       }
     }
   }
@@ -150,6 +157,13 @@ v7 = {
   "args": null,
   "kind": "ScalarField",
   "name": "name",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "score",
   "storageKey": null
 };
 return {
@@ -329,13 +343,7 @@ return {
                             "name": "answer",
                             "storageKey": null
                           },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "score",
-                            "storageKey": null
-                          },
+                          (v8/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -367,15 +375,15 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "UserNodeConnection",
+            "concreteType": "MembershipNodeConnection",
             "kind": "LinkedField",
-            "name": "members",
+            "name": "membershipSet",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "UserNodeEdge",
+                "concreteType": "MembershipNodeEdge",
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
@@ -383,16 +391,50 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "UserNode",
+                    "concreteType": "MembershipNode",
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
-                      (v3/*: any*/),
-                      (v5/*: any*/),
-                      (v4/*: any*/),
-                      (v6/*: any*/)
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "UserNode",
+                        "kind": "LinkedField",
+                        "name": "user",
+                        "plural": false,
+                        "selections": [
+                          (v2/*: any*/),
+                          (v3/*: any*/),
+                          (v5/*: any*/),
+                          (v4/*: any*/),
+                          (v6/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "right",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "wrong",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "partial",
+                        "storageKey": null
+                      },
+                      (v8/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -412,7 +454,7 @@ return {
     "metadata": {},
     "name": "PlayPageQuery",
     "operationKind": "query",
-    "text": "query PlayPageQuery(\n  $id: ID!\n) {\n  team(id: $id) {\n    ...QuizRenderer_team\n    id\n  }\n}\n\nfragment QuizRenderer_team on TeamNode {\n  id\n  creator {\n    id\n    username\n    firstName\n    lastName\n    isMe\n  }\n  createdAt\n  name\n  topic {\n    id\n    code\n    name\n  }\n  mode\n  state\n  userDone\n  currentQuestion {\n    id\n    question\n    modelAnswer\n    author {\n      username\n      ...UserBadge_user\n      isMe\n      id\n    }\n    answerSet {\n      edges {\n        node {\n          id\n          answer\n          score\n          author {\n            username\n            lastName\n            firstName\n            isMe\n            ...UserBadge_user\n            id\n          }\n        }\n      }\n    }\n  }\n  members {\n    edges {\n      node {\n        id\n        username\n        lastName\n        firstName\n        isMe\n      }\n    }\n  }\n}\n\nfragment UserBadge_user on UserNode {\n  firstName\n  lastName\n}\n"
+    "text": "query PlayPageQuery(\n  $id: ID!\n) {\n  team(id: $id) {\n    ...QuizRenderer_team\n    id\n  }\n}\n\nfragment QuizRenderer_team on TeamNode {\n  id\n  creator {\n    id\n    username\n    firstName\n    lastName\n    isMe\n  }\n  createdAt\n  name\n  topic {\n    id\n    code\n    name\n  }\n  mode\n  state\n  userDone\n  currentQuestion {\n    id\n    question\n    modelAnswer\n    author {\n      username\n      ...UserBadge_user\n      isMe\n      id\n    }\n    answerSet {\n      edges {\n        node {\n          id\n          answer\n          score\n          author {\n            username\n            lastName\n            firstName\n            isMe\n            ...UserBadge_user\n            id\n          }\n        }\n      }\n    }\n  }\n  membershipSet {\n    edges {\n      node {\n        id\n        user {\n          id\n          username\n          lastName\n          firstName\n          isMe\n        }\n        right\n        wrong\n        partial\n        score\n      }\n    }\n  }\n}\n\nfragment UserBadge_user on UserNode {\n  firstName\n  lastName\n}\n"
   }
 };
 })();
