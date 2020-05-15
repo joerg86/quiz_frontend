@@ -15,7 +15,7 @@ import Container from "react-bootstrap/Container";
 import CutImage from "../CutImage";
 import WaitImg from "../wait1.jpg";
 import WaitScreen from "./WaitScreen";
-
+import QuestionImage from "../question.jpg";
 
 const questionSchema = Yup.object().shape({
     question: Yup.string().required("Pflichtfeld"),
@@ -31,9 +31,13 @@ export default function QuestionPhase({team} : {team: QuizRenderer_team}) {
             image={WaitImg}/>
     else
         return (
-            <div className="p-3">
+            <>
+            <div className="pt-3 px-3">
             <h2 className="text-center">Erarbeitungsphase</h2>
-            <hr/>
+            <hr className="mb-0"/>
+        </div>
+        <Row noGutters className="align-items-start flex-grow-1 h-100">
+            <Col md={6} className="p-3 mx-auto">
             <Alert variant="info">
                 <i className="fas fa-info-circle"></i> In dieser Phase erarbeitest du eine Quizfrage, die du später deinen Mitspielern stellen darfst.
                 Benutze als Hilfsmittel die vereinbarten Lernmaterialien oder die Knowledge Base.
@@ -58,11 +62,11 @@ export default function QuestionPhase({team} : {team: QuizRenderer_team}) {
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Frage</Form.Label>
-                                    <Form.Control readOnly={team.userDone} name="question" as={Field} component="textarea"/>
+                                    <Form.Control readOnly={team.userDone} name="question" as={Field} component="textarea" rows={5}/>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Musterantwort</Form.Label>
-                                    <Form.Control readOnly={team.userDone} name="modelAnswer" as={Field} component="textarea"/>
+                                    <Form.Control readOnly={team.userDone} name="modelAnswer" as={Field} component="textarea" rows={5}/>
                                 </Form.Group>
                             </Card.Body>
                             <Card.Footer>
@@ -74,6 +78,10 @@ export default function QuestionPhase({team} : {team: QuizRenderer_team}) {
 
                     )}
             </Formik>
-            </div>
+            </Col>
+            <CutImage src={QuestionImage}/>
+        </Row>
+   
+            </>
         )
 }

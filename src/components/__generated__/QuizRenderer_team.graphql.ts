@@ -45,6 +45,7 @@ export type QuizRenderer_team = {
                         readonly lastName: string;
                         readonly firstName: string;
                         readonly isMe: boolean | null;
+                        readonly " $fragmentRefs": FragmentRefs<"UserBadge_user">;
                     };
                 } | null;
             } | null>;
@@ -112,6 +113,11 @@ v5 = {
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
+},
+v6 = {
+  "args": null,
+  "kind": "FragmentSpread",
+  "name": "UserBadge_user"
 };
 return {
   "argumentDefinitions": [],
@@ -218,11 +224,7 @@ return {
           "selections": [
             (v1/*: any*/),
             (v4/*: any*/),
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "UserBadge_user"
-            }
+            (v6/*: any*/)
           ],
           "storageKey": null
         },
@@ -276,7 +278,8 @@ return {
                         (v1/*: any*/),
                         (v3/*: any*/),
                         (v2/*: any*/),
-                        (v4/*: any*/)
+                        (v4/*: any*/),
+                        (v6/*: any*/)
                       ],
                       "storageKey": null
                     }
@@ -333,5 +336,5 @@ return {
   "type": "TeamNode"
 };
 })();
-(node as any).hash = 'bfbbf2ddbf36f1b37a34d0090d20953e';
+(node as any).hash = '7bad3c12871cc5d321c3faee96cb37d8';
 export default node;

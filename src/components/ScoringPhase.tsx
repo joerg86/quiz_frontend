@@ -20,6 +20,8 @@ export default function ScoringPhase({team} : {team: QuizRenderer_team}) {
         "A_0": "border-danger",
     }
 
+    const isModerator = team.currentQuestion.author.isMe;
+
     return (
         <div className="p-3">
         <h2 className="text-center">Bewertungsphase</h2>
@@ -37,7 +39,7 @@ export default function ScoringPhase({team} : {team: QuizRenderer_team}) {
         }
 
         {team.currentQuestion.answerSet.edges.map((edge) => 
-            <Card className={"my-3 "+scoreClassMap[edge.node.score]}>
+            <Card key={edge.node.id} className={"my-3 "+scoreClassMap[edge.node.score]}>
                 <Card.Body>
                     <Card.Text>
                         {edge.node.answer}
@@ -51,29 +53,31 @@ export default function ScoringPhase({team} : {team: QuizRenderer_team}) {
                     </Col>
                     <Col>
                     <ButtonGroup>
-                        <Button onClick={(e) => scoreAnswer(edge.node.id, "RIGHT")} 
+                        <Button disabled={!isModerator} onClick={(e) => scoreAnswer(edge.node.id, "RIGHT")} 
                             variant={ edge.node.score == "A_3" ? "success" : "outline-success"} 
                             size="sm"><i className="fas fa-check-double"></i> richtig
                         </Button><span> </span>
 
-                        <Button onClick={(e) => scoreAnswer(edge.node.id, "PARTIAL")} 
+                        <Button disabled={!isModerator} onClick={(e) => scoreAnswer(edge.node.id, "PARTIAL")} 
                             variant={ edge.node.score == "A_1" ? "warning" : "outline-warning"} 
                             size="sm"><i className="fas fa-check"></i> tlw. richtig
                         </Button><span> </span>
 
-                        <Button onClick={(e) => scoreAnswer(edge.node.id, "WRONG")} 
+                        <Button disabled={!isModerator} onClick={(e) => scoreAnswer(edge.node.id, "WRONG")} 
                             variant={ edge.node.score == "A_0" ? "danger" : "outline-danger"} 
                             size="sm"><i className="fas fa-times"></i> falsch
                         </Button><span> </span>
-                    </ButtonGroup>
+                    </ButtonGroup> 
                     </Col>
                     </Row>
                 </Card.Footer>
             </Card>
             )}
-            <Button onClick={(e) => nextPhase(team.id)} variant="primary">
-                <i className="fas fa-check"></i> Bewertungphase abschließen
-            </Button>
+            { isModerator &&
+                <Button onClick={(e) => nextPhase(team.id)} variant="primary">
+                    <i className="fas fa-check"></i> Bewertungphase abschließen
+                </Button>
+            }
         </div>
     )
 }

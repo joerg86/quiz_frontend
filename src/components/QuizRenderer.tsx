@@ -49,10 +49,9 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
             <Col lg={2} className="bg-light2 p-3">
                 <h3>{team.name}</h3>
                 <strong>{team.topic.code} {team.topic.name}</strong>
-                <UserSelect value={null} className="my-2" placeholder="Mitglied hinzufügen..." onChange={(v) => addMember(team.id, v.value)}/>
 
                 { team.members.edges.map((edge) => 
-                <div>
+                <div key={edge.node.id}>
                 <hr/>
                 <Row>
                     <Col xs="auto">
@@ -136,6 +135,7 @@ export default createFragmentContainer(
                                 lastName
                                 firstName
                                 isMe
+                                ...UserBadge_user
                             }
                         }
                     }

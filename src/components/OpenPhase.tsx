@@ -8,7 +8,8 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import { nextPhase } from "../lib/quiz";
+import { nextPhase, addMember } from "../lib/quiz";
+import UserSelect from "./UserSelect";
 
 
 export default function OpenPhase({team} : {team: QuizRenderer_team}) {
@@ -31,9 +32,24 @@ export default function OpenPhase({team} : {team: QuizRenderer_team}) {
                         {(team.state == "DONE") && "Möchtet ihr eine weitere Runde spielen?"}
                         {(team.state == "OPEN") && "Wenn ihr bereit seid, kann es losgehen."}
                     </p>
-                    <Button size="lg" className="m-3" onClick={() => nextPhase(team.id)}>
-                        <i className="fas fa-play"></i> Neue Runde starten
-                    </Button>
+
+                    { team.creator.isMe ?
+                        <Button size="lg" className="m-3" onClick={() => nextPhase(team.id)}>
+                            <i className="fas fa-play"></i> Neue Runde starten
+                        </Button>
+                        :
+                        <p className="text-muted">
+                            <i className="fas fa-info-circle"></i> Nur {team.creator.firstName + " " + team.creator.lastName} kann eine neue Runde starten.  
+                        </p>
+                    }
+                    {team.creator.isMe &&
+                        <Col md={6} className="mx-auto mt-5 p-3">
+                            <h5 className="m-3">Weitere Mitglieder hinzufügen</h5>
+                            <UserSelect value={null} className="" placeholder="Mitglied hinzufügen..." onChange={(v) => addMember(team.id, v.value)}/>
+                        </Col>
+                    }
+
+                    
                 </Container>
             </Col>
             <CutImage src={SeascapeImg}/>

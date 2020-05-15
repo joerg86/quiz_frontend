@@ -203,6 +203,6 @@ export async function getUsers(query: string) {
         `,
         {query}
     )
-    return data.users.edges.map((edge) => ({ value: edge.node.username, label: `${edge.node.firstName} ${edge.node.lastName} (${edge.node.username})` }));
+    return data.users.edges.map((edge) => ({ value: edge.node.username, label: `${edge.node.firstName} ${edge.node.lastName} (@${edge.node.username})` }));
 }
 
