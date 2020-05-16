@@ -4,7 +4,7 @@
 import { ConcreteRequest } from "relay-runtime";
 export type quizRemoveMemberMutationVariables = {
     teamId: string;
-    username: string;
+    username?: string | null;
 };
 export type quizRemoveMemberMutationResponse = {
     readonly removeMember: {
@@ -23,7 +23,7 @@ export type quizRemoveMemberMutation = {
 /*
 mutation quizRemoveMemberMutation(
   $teamId: ID!
-  $username: String!
+  $username: String
 ) {
   removeMember(input: {teamId: $teamId, username: $username}) {
     team {
@@ -45,7 +45,7 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "username",
-    "type": "String!"
+    "type": "String"
   }
 ],
 v1 = [
@@ -117,9 +117,9 @@ return {
     "metadata": {},
     "name": "quizRemoveMemberMutation",
     "operationKind": "mutation",
-    "text": "mutation quizRemoveMemberMutation(\n  $teamId: ID!\n  $username: String!\n) {\n  removeMember(input: {teamId: $teamId, username: $username}) {\n    team {\n      id\n    }\n  }\n}\n"
+    "text": "mutation quizRemoveMemberMutation(\n  $teamId: ID!\n  $username: String\n) {\n  removeMember(input: {teamId: $teamId, username: $username}) {\n    team {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'a65ac6de48e25ace18d1fd3f02d25bef';
+(node as any).hash = 'aa96a0dd674503ad5f0d6091a59cea68';
 export default node;

@@ -165,14 +165,14 @@ export function addMember(teamId : string, username : string, onCompleted?: ({er
     )
 }
 
-export function removeMember(teamId : string, username : string, onCompleted?: ({error, response}) => void) {
+export function removeMember(teamId : string, username? : string, onCompleted?: ({error, response}) => void) {
     return commitMutation(
         environment,
         {
             mutation: graphql`
                 mutation quizRemoveMemberMutation(
                     $teamId: ID!,
-                    $username: String!
+                    $username: String
                 ) {
                     removeMember(input: { 
                             teamId: $teamId,

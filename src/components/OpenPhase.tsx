@@ -8,7 +8,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import { nextPhase, addMember, setMode } from "../lib/quiz";
+import { nextPhase, addMember, setMode, removeMember } from "../lib/quiz";
 import UserSelect from "./UserSelect";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 
@@ -66,6 +66,14 @@ export default function OpenPhase({team} : {team: QuizRenderer_team}) {
                             </ButtonGroup>
 
                         </Col>
+                    }
+                    
+                    { team.creator.isMe && team.membershipSet.edges.length > 1 ?
+                        <p className="text-muted mt-5"><i className="fas fa-info-circle"></i> Um das Team verlassen zu können, entferne bitte zuerst alle anderen Mitglieder.</p>
+                        :
+                        <Button onClick={(e) => { removeMember(team.id) }} variant="danger" className="mt-5">
+                            <i className="fas fa-sign-out-alt"></i> Team verlassen
+                        </Button>
                     }
 
                     
