@@ -8,8 +8,9 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import { nextPhase, addMember } from "../lib/quiz";
+import { nextPhase, addMember, setMode } from "../lib/quiz";
 import UserSelect from "./UserSelect";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 
 export default function OpenPhase({team} : {team: QuizRenderer_team}) {
@@ -51,6 +52,19 @@ export default function OpenPhase({team} : {team: QuizRenderer_team}) {
                         <Col md={6} className="mx-auto mt-5 p-3 bg-light">
                             <h5 className="m-3">Weitere Mitglieder hinzufügen</h5>
                             <UserSelect value={null} className="" placeholder="Mitglied hinzufügen..." onChange={(v) => addMember(team.id, v.value)}/>
+                            <h5 className="m-3">Modus ändern</h5>
+            
+                            <ButtonGroup className="align-middle" size="sm">
+                                <Button onClick={(e) => {setMode(team.id, "TRAIN")}} variant={ team.mode == "TRAIN" ? "secondary" : "outline-secondary"}>
+                                    <i className="fas fa-smile"> </i><span> </span>
+                                    Training
+                                </Button>
+                                <Button onClick={(e) => {setMode(team.id, "COMPETITION")}} variant={ team.mode == "COMPETITION" ? "secondary" : "outline-secondary"}>
+                                    <i className="fas fa-crown"></i><span> </span>
+                                    Wettkampf
+                                </Button>
+                            </ButtonGroup>
+
                         </Col>
                     }
 

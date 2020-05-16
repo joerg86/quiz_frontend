@@ -55,7 +55,7 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
         <Row noGutters className="h-100">
             <Col xl={2} lg={3} className="bg-light2 p-3">
                 <h3>{team.name}</h3>
-                <strong>{team.topic.code} {team.topic.name}</strong>
+                <div><strong>{team.topic.code} {team.topic.name}</strong></div>
 
                 { team.membershipSet.edges.map((edge) => 
                 <div key={edge.node.id}>
@@ -75,12 +75,15 @@ function QuizRenderer({team} : {team: QuizRenderer_team}) {
                             </Button>}
 
                         <br/><small className="text-muted">@{edge.node.user.username}</small></h6>
-                        <div className="text-muted">
-                            <Badge variant="success" pill><i className="fas fa-fw fa-check-double"></i> {edge.node.right}</Badge><span> </span>
-                            <Badge variant="warning" pill><i className="fas fa-fw fa-check"></i> {edge.node.partial}</Badge><span> </span>
-                            <Badge variant="danger" pill><i className="fas fa-fw fa-times"></i> {edge.node.wrong}</Badge><span> </span>
-                            <Badge variant="dark" pill><i className="fas fa-fw fa-star"></i> {edge.node.score}</Badge>
-                        </div>
+
+                        { ((team.mode == "COMPETITION") || (edge.node.user.isMe)) &&
+                            <div className="text-muted">
+                                <Badge variant="success" pill><i className="fas fa-fw fa-check-double"></i> {edge.node.right}</Badge><span> </span>
+                                <Badge variant="warning" pill><i className="fas fa-fw fa-check"></i> {edge.node.partial}</Badge><span> </span>
+                                <Badge variant="danger" pill><i className="fas fa-fw fa-times"></i> {edge.node.wrong}</Badge><span> </span>
+                                <Badge variant="dark" pill><i className="fas fa-fw fa-star"></i> {edge.node.score}</Badge>
+                            </div>
+                        }
                     </Col>
                 </Row>
                 </div>

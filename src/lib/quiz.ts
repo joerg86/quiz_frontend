@@ -4,6 +4,7 @@ import environment from "./relayEnv";
 import graphql from 'babel-plugin-relay/macro';
 import { QuizRenderer_team } from "../components/__generated__/QuizRenderer_team.graphql";
 import { ScoreEnum } from "./__generated__/quizScoreAnswerMutation.graphql";
+import { ModeEnum } from "./__generated__/quizSetModeMutation.graphql";
 import { quizTopicsQuery} from "./__generated__/quizTopicsQuery.graphql"
 import { quizUsersQuery } from "./__generated__/quizUsersQuery.graphql";
 
@@ -185,6 +186,33 @@ export function removeMember(teamId : string, username : string, onCompleted?: (
                 }
             `,
             variables: { teamId, username },
+            onCompleted
+
+        }
+    )
+}
+
+export function setMode(teamId : string, mode: ModeEnum, onCompleted?: ({error, response}) => void) {
+    return commitMutation(
+        environment,
+        {
+            mutation: graphql`
+                mutation quizSetModeMutation(
+                    $teamId: ID!,
+                    $mode: ModeEnum!
+                ) {
+                    setMode(input: { 
+                            teamId: $teamId,
+                            mode: $mode
+                        }) 
+                    {
+                        team {
+                            id
+                        }   
+                    }
+                }
+            `,
+            variables: { teamId, mode },
             onCompleted
 
         }
