@@ -12,8 +12,8 @@ import {
 import PlayPage from './pages/PlayPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-
-
+import KBPage from './pages/KBPage';
+import KBBrowsePage from "./pages/KBBrowsePage";
 
 function App() {
   return (
@@ -26,6 +26,8 @@ function App() {
             <Route path="/teams/:id" component={PlayPage}/>
             <Route path="/teams" component={TeamsPage}/>
             <Route path="/login" component={LoginPage}/>
+            <Route path="/kb/browse/:topicID" component={KBBrowsePage}/>
+            <Route path="/kb" component={KBPage}/>
             <Route path="/" component={HomePage}/>
             
           </Switch>
