@@ -39,13 +39,7 @@ export default function ScoringPhase({team} : {team: QuizRenderer_team}) {
                 <Col md={6} className="p-3 mx-auto">
                     {team.currentQuestion && 
                         <>
-                            <QuestionCard question={team.currentQuestion}/>
-                            <Card bg="success" className="text-light">
-                                <Card.Body>
-                                    <Card.Title>Musterantwort</Card.Title>
-                                    {team.currentQuestion.modelAnswer}
-                                </Card.Body>
-                            </Card>
+                            <QuestionCard question={team.currentQuestion} number={team.questionNumber} total={team.questionCount} showAnswer/>
                         </>    
                     }
 

@@ -75,6 +75,8 @@ fragment QuizRenderer_team on TeamNode {
       }
     }
   }
+  questionCount
+  questionNumber
   membershipSet {
     edges {
       node {
@@ -375,6 +377,20 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "questionCount",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "questionNumber",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "MembershipNodeConnection",
             "kind": "LinkedField",
             "name": "membershipSet",
@@ -454,7 +470,7 @@ return {
     "metadata": {},
     "name": "PlayPageQuery",
     "operationKind": "query",
-    "text": "query PlayPageQuery(\n  $id: ID!\n) {\n  team(id: $id) {\n    ...QuizRenderer_team\n    id\n  }\n}\n\nfragment QuizRenderer_team on TeamNode {\n  id\n  creator {\n    id\n    username\n    firstName\n    lastName\n    isMe\n  }\n  createdAt\n  name\n  topic {\n    id\n    code\n    name\n  }\n  mode\n  state\n  userDone\n  currentQuestion {\n    id\n    question\n    modelAnswer\n    author {\n      username\n      ...UserBadge_user\n      isMe\n      id\n    }\n    answerSet {\n      edges {\n        node {\n          id\n          answer\n          score\n          author {\n            username\n            lastName\n            firstName\n            isMe\n            ...UserBadge_user\n            id\n          }\n        }\n      }\n    }\n  }\n  membershipSet {\n    edges {\n      node {\n        id\n        user {\n          id\n          username\n          lastName\n          firstName\n          isMe\n        }\n        right\n        wrong\n        partial\n        score\n      }\n    }\n  }\n}\n\nfragment UserBadge_user on UserNode {\n  firstName\n  lastName\n}\n"
+    "text": "query PlayPageQuery(\n  $id: ID!\n) {\n  team(id: $id) {\n    ...QuizRenderer_team\n    id\n  }\n}\n\nfragment QuizRenderer_team on TeamNode {\n  id\n  creator {\n    id\n    username\n    firstName\n    lastName\n    isMe\n  }\n  createdAt\n  name\n  topic {\n    id\n    code\n    name\n  }\n  mode\n  state\n  userDone\n  currentQuestion {\n    id\n    question\n    modelAnswer\n    author {\n      username\n      ...UserBadge_user\n      isMe\n      id\n    }\n    answerSet {\n      edges {\n        node {\n          id\n          answer\n          score\n          author {\n            username\n            lastName\n            firstName\n            isMe\n            ...UserBadge_user\n            id\n          }\n        }\n      }\n    }\n  }\n  questionCount\n  questionNumber\n  membershipSet {\n    edges {\n      node {\n        id\n        user {\n          id\n          username\n          lastName\n          firstName\n          isMe\n        }\n        right\n        wrong\n        partial\n        score\n      }\n    }\n  }\n}\n\nfragment UserBadge_user on UserNode {\n  firstName\n  lastName\n}\n"
   }
 };
 })();

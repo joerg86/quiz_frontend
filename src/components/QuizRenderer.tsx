@@ -157,6 +157,8 @@ export default createFragmentContainer(
                     }
                 }
             }
+            questionCount
+            questionNumber
             membershipSet {
                 edges {
                     node {

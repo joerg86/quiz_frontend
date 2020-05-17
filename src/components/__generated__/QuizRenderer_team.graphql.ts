@@ -51,6 +51,8 @@ export type QuizRenderer_team = {
             } | null>;
         };
     } | null;
+    readonly questionCount: number | null;
+    readonly questionNumber: number | null;
     readonly membershipSet: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -307,6 +309,20 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "questionCount",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "questionNumber",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "MembershipNodeConnection",
       "kind": "LinkedField",
       "name": "membershipSet",
@@ -380,5 +396,5 @@ return {
   "type": "TeamNode"
 };
 })();
-(node as any).hash = 'ee27089c1612d5d958f81574969134a8';
+(node as any).hash = '56e1bd1ef4701e0eaaa6aad416971ef0';
 export default node;

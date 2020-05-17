@@ -53,7 +53,7 @@ export default function AnswerPhase({team} : {team: QuizRenderer_team}) {
                 <Alert variant="info">
                     <i className="fas fa-info-circle"></i> In dieser Phase beantwortest du die Fragen der anderen Mitspieler.
                 </Alert>
-                {team.currentQuestion && <QuestionCard question={team.currentQuestion}/> }
+                {team.currentQuestion && <QuestionCard question={team.currentQuestion} number={team.questionNumber} total={team.questionCount}/> }
                 <Formik
                     initialValues={{
                         answer: ""
