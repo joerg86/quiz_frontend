@@ -162,7 +162,7 @@ export function scoreAnswer(answerID: string, score: ScoreEnum) {
     )
 }
 
-export function createTeam(name: string, topicId: string, onCompleted?: ({error, response}) => void) {
+export function createTeam(name: string, topicId: string, onCompleted?: (error, response) => void) {
     return commitMutation(
         environment,
         {

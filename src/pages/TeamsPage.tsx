@@ -14,7 +14,7 @@ import {QueryRenderer} from "react-relay";
 import environment from "../lib/relayEnv";
 import {TeamsPageQuery} from "./__generated__/TeamsPageQuery.graphql";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { LinkContainer } from "react-router-bootstrap";
 import Container from "react-bootstrap/Container";
@@ -33,6 +33,9 @@ const teamSchema = Yup.object().shape({
 })
 
 export default function PlayPage() {
+    const history = useHistory();
+    let timeout = null;
+
     return (
     <>
         <QueryRenderer<TeamsPageQuery>
@@ -61,7 +64,12 @@ export default function PlayPage() {
         `}
         variables={{}}
         render={({error, props, retry}) => {
+
+        if(timeout !== null)
+            window.clearTimeout(timeout);
+
         window.setTimeout(retry, 3000);
+
         return (
         <Row noGutters className="flex-grow-1 align-items-center h-100">
             <Col md={6} className="px-5">
@@ -94,11 +102,15 @@ export default function PlayPage() {
                                     topic: null
                                 }}
                                 onSubmit={(values, actions) => {
-                                        createTeam(values.name, values.topic.value, () => retry())
+                                        createTeam(values.name, values.topic.value, (response) => {
+                                            actions.setSubmitting(false);
+                                            history.push(`/teams/${response.createTeam.team.id}`)
+                                        })
                                     }
                                 }
-                            >
+                            >   
                                 {({values, errors, isSubmitting, setFieldValue}) => 
+                                <div>
                                 <FormikForm>
                                     <Form.Group>
                                         <Form.Label>Name</Form.Label>
@@ -115,10 +127,12 @@ export default function PlayPage() {
                                            
                                         />
                                     </Form.Group>
-                                    <Button variant="primary" type="submit">
+                                    <Button variant="primary" type="submit" disabled={isSubmitting}>
+                                        { isSubmitting && <span><i className="fa fa-spin fa-spinner"></i> </span>}
                                         Team gründen
                                     </Button>
                                 </FormikForm>
+                                </div>
                                 }
                             </Formik>
                     </Card.Body>
