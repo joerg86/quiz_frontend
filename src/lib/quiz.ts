@@ -56,6 +56,61 @@ export function postQuestion(teamID: string, question: string, modelAnswer: stri
     )
 }
 
+export function updateQuestion(questionID: string, question: string, modelAnswer: string) {
+    commitMutation(
+        environment,
+        {
+            mutation: graphql`
+                mutation quizUpdateQuestionMutation(
+                    $questionID: ID!,
+                    $question: String!,
+                    $modelAnswer: String!
+                ) {
+                    updateQuestion(input: { 
+                            id: $questionID,
+                            question: $question,
+                            modelAnswer: $modelAnswer,
+                        }) 
+                    {
+                        question {
+                            id
+                            question
+                            modelAnswer
+                        }
+                    }
+                }
+            `,
+            variables: { questionID, question, modelAnswer }
+        }
+    )
+}
+
+export function removeQuestion(questionID : string, onCompleted?: ({error, response}) => void) {
+    return commitMutation(
+        environment,
+        {
+            mutation: graphql`
+                mutation quizRemoveQuestionMutation(
+                    $questionID: ID!,
+                ) {
+                    removeQuestion(input: { 
+                            id: $questionID,
+                        }) 
+                    {
+                        question {
+                            id
+                        }   
+                    }
+                }
+            `,
+            variables: { questionID },
+            configs: [{deletedIDFieldName: "id", type: "NODE_DELETE"}],
+            onCompleted
+
+        }
+    )   
+}
+
 export function postAnswer(teamID: string, answer: string) {
     commitMutation(
         environment,

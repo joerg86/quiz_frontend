@@ -17,6 +17,7 @@ export type KBBrowsePageQueryResponse = {
                 readonly modelAnswer: string;
                 readonly author: {
                     readonly email: string;
+                    readonly isMe: boolean | null;
                     readonly " $fragmentRefs": FragmentRefs<"UserBadge_user">;
                 };
                 readonly topic: {
@@ -49,6 +50,7 @@ query KBBrowsePageQuery(
         author {
           ...UserBadge_user
           email
+          isMe
           id
         }
         topic {
@@ -137,10 +139,17 @@ v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "isMe",
   "storageKey": null
 },
 v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -190,6 +199,7 @@ return {
                     "plural": false,
                     "selections": [
                       (v5/*: any*/),
+                      (v6/*: any*/),
                       {
                         "args": null,
                         "kind": "FragmentSpread",
@@ -206,8 +216,8 @@ return {
                     "name": "topic",
                     "plural": false,
                     "selections": [
-                      (v6/*: any*/),
-                      (v7/*: any*/)
+                      (v7/*: any*/),
+                      (v8/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -279,6 +289,7 @@ return {
                         "storageKey": null
                       },
                       (v5/*: any*/),
+                      (v6/*: any*/),
                       (v2/*: any*/)
                     ],
                     "storageKey": null
@@ -291,8 +302,8 @@ return {
                     "name": "topic",
                     "plural": false,
                     "selections": [
-                      (v6/*: any*/),
                       (v7/*: any*/),
+                      (v8/*: any*/),
                       (v2/*: any*/)
                     ],
                     "storageKey": null
@@ -313,9 +324,9 @@ return {
     "metadata": {},
     "name": "KBBrowsePageQuery",
     "operationKind": "query",
-    "text": "query KBBrowsePageQuery(\n  $topicID: ID\n  $query: String\n  $own: Boolean\n) {\n  questions(topic: $topicID, query: $query, own: $own) {\n    edges {\n      node {\n        id\n        question\n        modelAnswer\n        author {\n          ...UserBadge_user\n          email\n          id\n        }\n        topic {\n          name\n          code\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment UserBadge_user on UserNode {\n  firstName\n  lastName\n}\n"
+    "text": "query KBBrowsePageQuery(\n  $topicID: ID\n  $query: String\n  $own: Boolean\n) {\n  questions(topic: $topicID, query: $query, own: $own) {\n    edges {\n      node {\n        id\n        question\n        modelAnswer\n        author {\n          ...UserBadge_user\n          email\n          isMe\n          id\n        }\n        topic {\n          name\n          code\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment UserBadge_user on UserNode {\n  firstName\n  lastName\n}\n"
   }
 };
 })();
-(node as any).hash = 'bb875c4af3c0d029b17297ca6e6b3742';
+(node as any).hash = '69018ffaf1979a3d562dbdf242ae75df';
 export default node;

@@ -22,6 +22,7 @@ import Container from "react-bootstrap/Container";
 import UserBadge from "../components/UserBadge";
 import qs from "qs";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
+import { LinkContainer } from "react-router-bootstrap";
 
 
 export default function KBBrowsePage() {
@@ -111,6 +112,7 @@ export default function KBBrowsePage() {
                                     author {
                                         ...UserBadge_user
                                         email
+                                        isMe
                                     }
                                     topic {
                                         name
@@ -141,7 +143,27 @@ export default function KBBrowsePage() {
                                         <UserBadge user={edge.node.author}/>
                                         </Col>
                                         <Col className="text-right">
-                                            <a href={`mailto:${edge.node.author.email}`}><i className="fas fa-envelope"></i> E-Mail an Autor</a>
+                                                <ButtonGroup size="sm">
+                                                <Button variant="outline-primary" as="a" title="E-Mail an Autor" href={`mailto:${edge.node.author.email}`}>
+                                                    <i className="fas fa-envelope"></i>
+                                                </Button>
+                                                <span> </span>
+
+                                                {edge.node.author.isMe && 
+                                                    <>
+                                                        <LinkContainer to={`/kb/edit/${edge.node.id}/?backTo=${location.pathname}`}>
+                                                            <Button variant="outline-primary" title="Frage bearbeiten" href=""><i className="fas fa-pencil-alt"></i></Button>
+                                                        </LinkContainer>
+                                                        <span> </span>
+
+                                                        <LinkContainer to={`/kb/delete/${edge.node.id}/?backTo=${location.pathname}`}>
+                                                            <Button className="text-danger" variant="outline-primary" title="Frage löschen" href=""><i className="fas fa-trash"></i></Button>
+                                                        </LinkContainer>
+                                                        <span> </span>
+                                                    </>
+                                                }
+
+                                            </ButtonGroup>
                                         </Col>
                                     </Row>
                                 </Card.Footer>
