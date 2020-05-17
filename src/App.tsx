@@ -26,7 +26,7 @@ function App() {
             <Route path="/teams/:id" component={PlayPage}/>
             <Route path="/teams" component={TeamsPage}/>
             <Route path="/login" component={LoginPage}/>
-            <Route path="/kb/browse/:topicID" component={KBBrowsePage}/>
+            <Route path="/kb/browse/:topicID?" component={KBBrowsePage}/>
             <Route path="/kb" component={KBPage}/>
             <Route path="/" component={HomePage}/>
             
