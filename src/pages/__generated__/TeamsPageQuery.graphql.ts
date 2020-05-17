@@ -2,6 +2,7 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type TeamMode = "COMPETITION" | "TRAIN" | "%future added value";
 export type TeamState = "ANSWER" | "ARCHIVED" | "DONE" | "OPEN" | "QUESTION" | "SCORING" | "%future added value";
 export type TeamsPageQueryVariables = {};
@@ -15,7 +16,7 @@ export type TeamsPageQueryResponse = {
                 readonly state: TeamState;
                 readonly createdAt: unknown;
                 readonly creator: {
-                    readonly username: string;
+                    readonly " $fragmentRefs": FragmentRefs<"UserBadge_user">;
                 };
                 readonly topic: {
                     readonly name: string;
@@ -43,7 +44,7 @@ query TeamsPageQuery {
         state
         createdAt
         creator {
-          username
+          ...UserBadge_user
           id
         }
         topic {
@@ -54,6 +55,11 @@ query TeamsPageQuery {
       }
     }
   }
+}
+
+fragment UserBadge_user on UserNode {
+  firstName
+  lastName
 }
 */
 
@@ -94,13 +100,6 @@ v4 = {
   "storageKey": null
 },
 v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "username",
-  "storageKey": null
-},
-v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -151,7 +150,11 @@ return {
                     "name": "creator",
                     "plural": false,
                     "selections": [
-                      (v5/*: any*/)
+                      {
+                        "args": null,
+                        "kind": "FragmentSpread",
+                        "name": "UserBadge_user"
+                      }
                     ],
                     "storageKey": null
                   },
@@ -164,7 +167,7 @@ return {
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
-                      (v6/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -223,7 +226,20 @@ return {
                     "name": "creator",
                     "plural": false,
                     "selections": [
-                      (v5/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "firstName",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "lastName",
+                        "storageKey": null
+                      },
                       (v0/*: any*/)
                     ],
                     "storageKey": null
@@ -237,7 +253,7 @@ return {
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
-                      (v6/*: any*/),
+                      (v5/*: any*/),
                       (v0/*: any*/)
                     ],
                     "storageKey": null
@@ -258,9 +274,9 @@ return {
     "metadata": {},
     "name": "TeamsPageQuery",
     "operationKind": "query",
-    "text": "query TeamsPageQuery {\n  teams {\n    edges {\n      node {\n        id\n        name\n        mode\n        state\n        createdAt\n        creator {\n          username\n          id\n        }\n        topic {\n          name\n          code\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query TeamsPageQuery {\n  teams {\n    edges {\n      node {\n        id\n        name\n        mode\n        state\n        createdAt\n        creator {\n          ...UserBadge_user\n          id\n        }\n        topic {\n          name\n          code\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment UserBadge_user on UserNode {\n  firstName\n  lastName\n}\n"
   }
 };
 })();
-(node as any).hash = 'e36bd104fce191d220d1d105a75def56';
+(node as any).hash = 'eead38a8f7f6245102496f9a53aee2bc';
 export default node;

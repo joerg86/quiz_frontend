@@ -24,6 +24,8 @@ import * as Yup from "yup";
 import {Form as FormikForm, Formik, Field} from "formik";
 import AsyncSelect from 'react-select/async';
 import { getTopics, createTeam } from "../lib/quiz";
+import UserBadge from "../components/UserBadge";
+
 
 const teamSchema = Yup.object().shape({
     name: Yup.string().required("Pflichtfeld"),
@@ -46,7 +48,7 @@ export default function PlayPage() {
                             state
                             createdAt
                             creator {
-                                username
+                                ...UserBadge_user
                             }
                             topic {
                                 name
@@ -64,49 +66,24 @@ export default function PlayPage() {
         <Row noGutters className="flex-grow-1 align-items-center h-100">
             <Col md={6} className="px-5">
                 <h1>Spielen</h1>
-                <Card className="my-3">
-                    <Card.Body>
-                        <Card.Title>Meine Teams</Card.Title>
+                <p className="lead">
+                    Wähle ein Team oder erstelle ein neues, damit es losgehen kann.
+                </p>
+                        
+                { props && props.teams.edges.map((edge) => (
+                    <Card key={edge.node.id} className="my-3">
+                        <Card.Body>
+                            <Card.Title>
+                                <Link to={`/teams/${edge.node.id}`} className="stretched-link">
+                                    {edge.node.name}
+                                </Link>
+                                <div className="text-muted"><small>{edge.node.topic.code} {edge.node.topic.name}</small></div>
+                            </Card.Title>
+                            <UserBadge user={edge.node.creator}/>
+                        </Card.Body>
+                    </Card>
+                ))}
 
-                            <Table striped hover size="sm" responsive>
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Name
-                                        </th>
-                                        <th>
-                                            Thema
-                                        </th>
-                                        <th>
-                                            Gründer
-                                        </th>
-                                        <th>
-                                            Modus
-                                        </th>
-                                        <th>
-                                            Erstellt
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                
-                                    { props && props.teams.edges.map((edge) => (
-                                        <tr key={edge.node.id}>
-                                            <td>
-                                                <Link to={`/teams/${edge.node.id}`}>
-                                                    {edge.node.name}
-                                                </Link>
-                                            </td>
-                                            <td>{edge.node.topic.code} {edge.node.topic.name}</td>
-                                            <td>{edge.node.creator.username}</td>
-                                            <td>{(edge.node.mode == "TRAIN") ? "Training" : "Wettkampf"}</td>
-                                            <td>{moment(edge.node.createdAt).fromNow()}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
-                    </Card.Body>
-                </Card>
                 <Card bg="light" className="">
                     <Card.Body>
                         <Card.Title>Ein neues Team gründen</Card.Title>
