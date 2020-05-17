@@ -56,7 +56,7 @@ export function postQuestion(teamID: string, question: string, modelAnswer: stri
     )
 }
 
-export function updateQuestion(questionID: string, question: string, modelAnswer: string) {
+export function updateQuestion(questionID: string, question: string, modelAnswer: string, onCompleted?: ({error, response}) => void) {
     commitMutation(
         environment,
         {
@@ -80,7 +80,8 @@ export function updateQuestion(questionID: string, question: string, modelAnswer
                     }
                 }
             `,
-            variables: { questionID, question, modelAnswer }
+            variables: { questionID, question, modelAnswer },
+            onCompleted
         }
     )
 }

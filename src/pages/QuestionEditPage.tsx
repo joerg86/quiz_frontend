@@ -59,8 +59,8 @@ export default function QuestionEditPage() {
                             <Formik
                                 initialValues={{ question: props.question.question, modelAnswer: props.question.modelAnswer}}
                                 onSubmit={(values, actions) => {
-                                    updateQuestion(questionID, values.question, values.modelAnswer);
-                                    history.push(backTo);
+                                    updateQuestion(questionID, values.question, values.modelAnswer, () => history.push(backTo));
+
                                 }}
                             >
                                 { ({isSubmitting, values}) =>
