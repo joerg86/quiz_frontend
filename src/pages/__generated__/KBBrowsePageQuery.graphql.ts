@@ -6,6 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type KBBrowsePageQueryVariables = {
     topicID?: string | null;
     query?: string | null;
+    own?: boolean | null;
 };
 export type KBBrowsePageQueryResponse = {
     readonly questions: {
@@ -37,8 +38,9 @@ export type KBBrowsePageQuery = {
 query KBBrowsePageQuery(
   $topicID: ID
   $query: String
+  $own: Boolean
 ) {
-  questions(topic: $topicID, question_Icontains: $query) {
+  questions(topic: $topicID, query: $query, own: $own) {
     edges {
       node {
         id
@@ -78,12 +80,23 @@ var v0 = [
     "kind": "LocalArgument",
     "name": "query",
     "type": "String"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "own",
+    "type": "Boolean"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
-    "name": "question_Icontains",
+    "name": "own",
+    "variableName": "own"
+  },
+  {
+    "kind": "Variable",
+    "name": "query",
     "variableName": "query"
   },
   {
@@ -300,9 +313,9 @@ return {
     "metadata": {},
     "name": "KBBrowsePageQuery",
     "operationKind": "query",
-    "text": "query KBBrowsePageQuery(\n  $topicID: ID\n  $query: String\n) {\n  questions(topic: $topicID, question_Icontains: $query) {\n    edges {\n      node {\n        id\n        question\n        modelAnswer\n        author {\n          ...UserBadge_user\n          email\n          id\n        }\n        topic {\n          name\n          code\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment UserBadge_user on UserNode {\n  firstName\n  lastName\n}\n"
+    "text": "query KBBrowsePageQuery(\n  $topicID: ID\n  $query: String\n  $own: Boolean\n) {\n  questions(topic: $topicID, query: $query, own: $own) {\n    edges {\n      node {\n        id\n        question\n        modelAnswer\n        author {\n          ...UserBadge_user\n          email\n          id\n        }\n        topic {\n          name\n          code\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment UserBadge_user on UserNode {\n  firstName\n  lastName\n}\n"
   }
 };
 })();
-(node as any).hash = 'e4e923effb12e00e7fc615909070bde8';
+(node as any).hash = 'bb875c4af3c0d029b17297ca6e6b3742';
 export default node;

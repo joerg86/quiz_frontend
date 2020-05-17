@@ -21,14 +21,17 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import UserBadge from "../components/UserBadge";
 import qs from "qs";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+
 
 export default function KBBrowsePage() {
     const history = useHistory();
     const location = useLocation();
-    const { topicID } = useParams();
+    let { topicID } = useParams();
 
     const params = qs.parse(location.search.slice(1));
     const query = params.q as string;
+    const own = params.own == "true"
     const [topic, setTopic] = useState<any>();
 
 
@@ -56,25 +59,39 @@ export default function KBBrowsePage() {
             setTopic(null);
     }, [topicID])
 
+    const querystring = {
+        q: query,
+        own: own
+    }
+    function search() {
+        history.push(`/kb/browse/${topicID ? topicID+"/" : ""}?${qs.stringify(querystring)}`)
+    }
+
     return (
         <Container className="px-5">
             <Row>
-                <Col md={6}>
+                <Col md={4}>
                     <Form.Control className="mt-5" type="search" placeholder="Suchbegriff eingeben..." name="q" value={query} 
-                        onChange={(e) => history.push(`/kb/browse/?q=${e.target.value}`)}/>
+                        onChange={(e) => { querystring.q = e.target.value; search() }}/>
                 </Col>
-                <Col md={6}>
+                <Col md={4}>
                     <AsyncSelect
                         className="my-5"
                         placeholder="Thema wählen..."
                         cacheOptions 
                         loadOptions={getTopics} 
                         noOptionsMessage={(v) => "Bitte Suchbegriff eingeben..."} 
-                        onChange={(value: any) => history.push(`/kb/browse/${value ? value.value : ""}/?q=${query ? query : ""}`)}
+                        onChange={(value: any) => {topicID = value?.value; search()}}
                         value={topic}
                         isClearable
                                                 
                     />
+                </Col>
+                <Col md={4}>
+                    <ButtonGroup className="my-5 w-100">
+                        <Button onClick={() => { querystring.own = false; search()}} variant={ own ? "outline-primary" : "primary"}><i className="fas fa-user-friends"></i> Alle Fragen</Button>
+                        <Button onClick={() => { querystring.own = true; search()}} variant={ !own ? "outline-primary" : "primary"}><i className="fas fa-user"></i> Meine Fragen</Button>
+                    </ButtonGroup>
                 </Col>
             </Row>
             <QueryRenderer<KBBrowsePageQuery>
@@ -83,8 +100,9 @@ export default function KBBrowsePage() {
                     query KBBrowsePageQuery(
                         $topicID: ID
                         $query: String
+                        $own: Boolean
                     ) {
-                        questions(topic: $topicID, question_Icontains: $query) {
+                        questions(topic: $topicID, query: $query, own: $own) {
                             edges {
                                 node {
                                     id
@@ -103,7 +121,7 @@ export default function KBBrowsePage() {
                         }
                     }
                 `}
-                variables={{topicID, query}}
+                variables={{topicID, query, own}}
                 render={({error, props}) =>
                 <>
                     {props && props.questions.edges.map((edge) =>

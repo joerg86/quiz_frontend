@@ -259,7 +259,17 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "question_Icontains",
+                  "name": "topic",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "query",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -269,10 +279,10 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "topic",
+                  "name": "own",
                   "type": {
                     "kind": "SCALAR",
-                    "name": "ID",
+                    "name": "Boolean",
                     "ofType": null
                   }
                 }
