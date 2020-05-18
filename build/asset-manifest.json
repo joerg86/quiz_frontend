@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b8d82d23.chunk.css",
+    "main.js": "/static/js/main.caae858e.chunk.js",
+    "main.js.map": "/static/js/main.caae858e.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.37f1d1b9.js",
+    "runtime-main.js.map": "/static/js/runtime-main.37f1d1b9.js.map",
+    "static/js/2.6c5156e4.chunk.js": "/static/js/2.6c5156e4.chunk.js",
+    "static/js/2.6c5156e4.chunk.js.map": "/static/js/2.6c5156e4.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.e2b4cb9f1cbefacbe1779f585c49dd5f.js": "/precache-manifest.e2b4cb9f1cbefacbe1779f585c49dd5f.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.b8d82d23.chunk.css.map": "/static/css/main.b8d82d23.chunk.css.map",
+    "static/js/2.6c5156e4.chunk.js.LICENSE.txt": "/static/js/2.6c5156e4.chunk.js.LICENSE.txt",
+    "static/media/answer.jpg": "/static/media/answer.ad14f417.jpg",
+    "static/media/delete.jpg": "/static/media/delete.71059c26.jpg",
+    "static/media/edit.jpg": "/static/media/edit.f7026e52.jpg",
+    "static/media/iubh.png": "/static/media/iubh.46d4f940.png",
+    "static/media/kb.jpg": "/static/media/kb.d50fabee.jpg",
+    "static/media/login.jpg": "/static/media/login.faf2bcfc.jpg",
+    "static/media/play.jpg": "/static/media/play.b3e38b7e.jpg",
+    "static/media/question.jpg": "/static/media/question.6c4dd8df.jpg",
+    "static/media/scoring.jpg": "/static/media/scoring.5821ed37.jpg",
+    "static/media/seascape.jpg": "/static/media/seascape.7dcb1943.jpg",
+    "static/media/team.jpg": "/static/media/team.ee4f8d13.jpg",
+    "static/media/wait1.jpg": "/static/media/wait1.6d414af4.jpg",
+    "static/media/wait2.jpg": "/static/media/wait2.833fd2d4.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.37f1d1b9.js",
+    "static/js/2.6c5156e4.chunk.js",
+    "static/css/main.b8d82d23.chunk.css",
+    "static/js/main.caae858e.chunk.js"
+  ]
+}
