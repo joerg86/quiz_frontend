@@ -23,9 +23,11 @@ export default function HomePage() {
 
                     </p>
                     <div className="m-5">
+                        <div className="embed-container">
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/D4W9eQEv9WM" 
                             frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
                             allowFullScreen></iframe>
+                        </div>
                     </div>
             </Container>
             <Container className="bg-dark text-light text-center p-5 border-top-fat" fluid>
