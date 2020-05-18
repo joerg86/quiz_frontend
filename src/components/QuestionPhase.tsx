@@ -58,7 +58,7 @@ export default function QuestionPhase({team} : {team: QuizRenderer_team}) {
                                 <Card.Title>Deine Frage</Card.Title>
                                 <Form.Group>
                                     <Form.Label>Thema</Form.Label>
-                                    <Form.Control readOnly value="IREN01 Requirements Engineering"/>
+                                    <Form.Control readOnly value={team.topic.code + " " + team.topic.name}/>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Frage</Form.Label>
