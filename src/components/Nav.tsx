@@ -14,8 +14,11 @@ import { QueryRenderer } from 'react-relay';
 import environment from '../lib/relayEnv';
 import { NavQuery } from "./__generated__/NavQuery.graphql";
 import { logout } from '../lib/auth';
+import { useHistory } from 'react-router-dom';
 
-export default function Appbar() {
+export default function Appbar({auth, setAuth}) {
+  const history = useHistory();
+
   return (
     <>
         <QueryRenderer<NavQuery>
@@ -28,7 +31,7 @@ export default function Appbar() {
                 }
             }
         `}
-        variables={{}}
+        variables={{auth}}
         render= {({props, error, retry}) =>
             <div className="flex-shrink-0">
                 <Navbar bg="dark" expand="lg" variant="dark" className="row no-gutters border-bottom border-primary my-0 text-light">
@@ -42,14 +45,17 @@ export default function Appbar() {
                                 </LinkContainer>
 
                                 { (props && props.me) && 
-                                    <LinkContainer to="/teams">
-                                        <Nav.Link className="m-1"><i className="fas fa-users"></i> Spielen</Nav.Link>
-                                    </LinkContainer>
+                                    <>
+                                        <LinkContainer to="/teams">
+                                            <Nav.Link className="m-1"><i className="fas fa-users"></i> Spielen</Nav.Link>
+                                        </LinkContainer>
+
+                                        <LinkContainer to="/kb">
+                                            <Nav.Link className="m-1"><i className="fas fa-question-circle"></i> Knowledge Base</Nav.Link>
+                                        </LinkContainer> 
+                                    </>                               
                                 }
                 
-                                <LinkContainer to="/kb">
-                                    <Nav.Link className="m-1"><i className="fas fa-question-circle"></i> Knowledge Base</Nav.Link>
-                                </LinkContainer>
                             </Nav>
 
                             <Navbar.Text className="mx-1">
@@ -62,7 +68,7 @@ export default function Appbar() {
 
                             <Nav>
                                 { (props && props.me) ? 
-                                    <Nav.Link onClick={(e) => { logout(); retry() } } className="m-1"><i className="fas fa-sign-out-alt"></i> Logout</Nav.Link>
+                                    <Nav.Link onClick={(e) => { logout(); setAuth(false); retry(); history.push("/") } } className="m-1"><i className="fas fa-sign-out-alt"></i> Logout</Nav.Link>
                                     :
                                     <LinkContainer to="/login">
                                         <Nav.Link className="m-1"><i className="fas fa-sign-in-alt"></i> Login</Nav.Link>

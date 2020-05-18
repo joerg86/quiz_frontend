@@ -60,10 +60,12 @@ export default class LoginPage extends React.Component {
                     {
                         this.setState({errors: ["Benutzername und/oder Kennwort falsch. Bitte achte auf Groß- und Kleinschreibung."]})
                         localStorage.setItem("jwt", null);
+                        this.props.setAuth(false);
                     }
                     else
                     {
                         localStorage.setItem("jwt", response.tokenAuth.token);
+                        this.props.setAuth(true);
                         this.loginRedirect();
                     }
                 }
