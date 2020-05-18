@@ -30,10 +30,7 @@ import { RelayObservable } from 'relay-runtime/lib/network/RelayObservable';
     });
 
     const result = await response.json();
-      if (result && result.errors) {
-        return {data: null, errors: result.errors};
-      }
-      return result;
+    return result;
     
   }
 
