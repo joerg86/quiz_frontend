@@ -34,7 +34,7 @@ export default function Appbar({auth, setAuth}) {
         variables={{auth}}
         render= {({props, error, retry}) =>
             <div className="flex-shrink-0">
-                <Navbar bg="dark" expand="lg" variant="dark" className="row no-gutters border-bottom border-primary my-0 text-light">
+                <Navbar bg="dark" collapseOnSelect={true} expand="lg" variant="dark" className="row no-gutters border-bottom border-primary my-0 text-light">
                     <Container>
                         <Navbar.Brand href="#home">Q-Teams</Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
